@@ -28,6 +28,16 @@ public class ChosseAccountActivity extends AppCompatActivity {
                 finishAfterTransition();
             }
         });
+
+        btnCustomerLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChosseAccountActivity.this, CustomerLoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
     private void initFindView() {
