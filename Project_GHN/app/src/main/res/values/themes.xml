@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.Project_GHN" parent="Base.Theme.Project_GHN" />
+
+    <style name="Theme.menu" parent="Theme.AppCompat.Light">
+        <item name="android:background">#48AA38</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">18dp</item>
+    </style>
 </resources>
