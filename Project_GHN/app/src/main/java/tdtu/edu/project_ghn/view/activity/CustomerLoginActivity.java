@@ -1,4 +1,4 @@
-package tdtu.edu.project_ghn.view;
+package tdtu.edu.project_ghn.view.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

@@ -11,14 +11,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import tdtu.edu.project_ghn.view.ChosseAccountActivity;
+import tdtu.edu.project_ghn.view.activity.ChosseAccountActivity;
+import tdtu.edu.project_ghn.view.activity.ListOrderActivity;
+import tdtu.edu.project_ghn.view.fragment.CreateOrderFragment;
 import tdtu.edu.project_ghn.view.fragment.ListOrderFragment;
 
 
@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private int mCurrentFragment = FRAGMENT_LIST_ORDER;
     //test
 
-    private FrameLayout replaceFragment;
     private FirebaseAuth user;
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
@@ -43,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initUI();
         initListener();
         buildNavigation();
+
+        navigationView.getMenu().findItem(R.id.nav_list_current_order).setChecked(true);
     }
 
     private void buildNavigation() {
@@ -63,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout = findViewById(R.id.drawerLayout);
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_viewMainActivity);
-        replaceFragment = findViewById(R.id.replaceFragment);
 
     }
 
@@ -74,11 +74,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, ChosseAccountActivity.class);
             startActivity(intent);
 
+            navigationView.getMenu().findItem(R.id.nav_signOut).setChecked(true);
             FirebaseAuth.getInstance().signOut();
             finishAffinity();
         } else if (id == R.id.nav_create_order) {
-            replaceFragment(new ListOrderFragment());
-            navigationView.getMenu().findItem(R.id.nav_list_current_order).setChecked(true);
+            replaceFragment(new CreateOrderFragment());
+            navigationView.getMenu().findItem(R.id.nav_create_order).setChecked(true);
+        } else if (id == R.id.nav_list_current_order) {
+            Intent intent = new Intent(MainActivity.this, ListOrderActivity.class);
+            startActivity(intent);
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

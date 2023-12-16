@@ -13,22 +13,25 @@
         android:theme="@style/Theme.Project_GHN"
         tools:targetApi="31">
         <activity
-            android:name=".view.ChangeCustomerPassActivity"
+            android:name=".view.activity.ListOrderActivity"
             android:exported="false" />
         <activity
-            android:name=".view.CustomerSignUpActivity"
+            android:name=".view.activity.ChangeCustomerPassActivity"
             android:exported="false" />
         <activity
-            android:name=".view.CustomerLoginActivity"
+            android:name=".view.activity.CustomerSignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ShipperLoginActivity"
+            android:name=".view.activity.CustomerLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ChosseAccountActivity"
+            android:name=".view.activity.ShipperLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".view.SplashActivity"
+            android:name=".view.activity.ChosseAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
