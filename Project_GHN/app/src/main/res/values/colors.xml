@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bray">#f7f2f9</color>
+    <color name="main_color">#48AA38</color>
+    <color name="btn_accept">#3E3AF4</color>
+    <color name="btn_create">#427125</color>
+    <color name="btn_destroy">#DF5B31</color>
 </resources>

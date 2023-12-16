@@ -58,4 +58,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
 
     implementation ("androidx.drawerlayout:drawerlayout:1.2.0")
+
+    implementation("androidx.cardview:cardview:1.0.0")
+
+    implementation ("com.makeramen:roundedimageview:2.3.0")
+
 }
