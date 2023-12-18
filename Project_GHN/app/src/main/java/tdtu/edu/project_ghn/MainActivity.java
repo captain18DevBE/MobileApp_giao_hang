@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import tdtu.edu.project_ghn.view.activity.ChosseAccountActivity;
+import tdtu.edu.project_ghn.view.activity.CustomerCreateOrderActivity3;
 import tdtu.edu.project_ghn.view.activity.ListOrderActivity;
 import tdtu.edu.project_ghn.view.fragment.CreateOrderFragment;
 import tdtu.edu.project_ghn.view.fragment.ListOrderFragment;
@@ -85,7 +86,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             replaceFragment(new CreateOrderFragment());
             navigationView.getMenu().findItem(R.id.nav_create_order).setChecked(true);
         } else if (id == R.id.nav_list_current_order) {
-            Intent intent = new Intent(MainActivity.this, ListOrderActivity.class);
+            //Changed to test Google map. previous: Intent intent = new Intent(MainActivity.this, ListOrderActivity.class);
+            Intent intent = new Intent(MainActivity.this, CustomerCreateOrderActivity3.class);
             startActivity(intent);
         }
 
