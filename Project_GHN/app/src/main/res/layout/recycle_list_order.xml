@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/item_recycle_view"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="3dp"
+        app:contentPadding="15dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txtAddressListOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/recycle_view_item"
+
+                android:text="Địa chỉ"/>
+
+            <TextView
+                android:id="@+id/txtDateTimeListOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:theme="@style/recycle_view_item"
+
+                android:text="Thời gian"/>
+
+            <TextView
+                android:id="@+id/txtTypeListOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/recycle_view_item"
+                android:text="Loại hàng hóa"/>
+
+            <TextView
+                android:id="@+id/txtPhoneListOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/recycle_view_item"
+                android:text="Người nhận"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

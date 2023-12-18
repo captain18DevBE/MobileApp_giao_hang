@@ -63,4 +63,9 @@ dependencies {
 
     implementation ("com.makeramen:roundedimageview:2.3.0")
 
+    implementation ("org.projectlombok:lombok:0.11.0")
+    // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+
 }
