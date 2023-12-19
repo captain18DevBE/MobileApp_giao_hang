@@ -29,9 +29,10 @@
                 />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLocationCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:text="Siêu tốc: 100.000 VND"
+                android:text="Quận 7"
                 android:textSize="13sp"
                 android:textColor="@color/black"
                 app:strokeColor="@color/black"
@@ -47,9 +48,10 @@
                 android:text="Địa chỉ người nhận:"
                 />
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDestLocation"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:text="Siêu tốc: 100.000 VND"
+                android:text="Quận 1"
                 android:textSize="13sp"
                 android:textColor="@color/black"
                 app:strokeColor="@color/black"

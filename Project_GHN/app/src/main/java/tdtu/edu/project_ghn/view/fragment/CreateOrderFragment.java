@@ -20,11 +20,13 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import tdtu.edu.project_ghn.MainActivity;
 import tdtu.edu.project_ghn.R;
+import tdtu.edu.project_ghn.view.activity.CustomerCreateOrderActivity3;
 import tdtu.edu.project_ghn.view.activity.DetailProductActivity;
 
 public class CreateOrderFragment extends Fragment {
     private View mView;
-    private Button spaceChoseService, spaceChoseTransport, btnCheapService, btnFastService, btnMotorbike, btnTricycles, btnNextToDesProduct;
+    private Button spaceChoseService, spaceChoseTransport, btnCheapService, btnFastService, btnMotorbike,
+            btnTricycles, btnNextToDesProduct, btnDestLocation, btnLocationCustomer;
     public CreateOrderFragment() {}
 
     @Nullable
@@ -55,6 +57,22 @@ public class CreateOrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DetailProductActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnDestLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CustomerCreateOrderActivity3.class);
+                startActivity(intent);
+            }
+        });
+
+        btnLocationCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CustomerCreateOrderActivity3.class);
                 startActivity(intent);
             }
         });
@@ -118,6 +136,8 @@ public class CreateOrderFragment extends Fragment {
         spaceChoseService = mView.findViewById(R.id.space_choseService);
         spaceChoseTransport = mView.findViewById(R.id.space_choseTransport);
         btnNextToDesProduct = mView.findViewById(R.id.btnNextToDesProduct);
+        btnLocationCustomer = mView.findViewById(R.id.btnLocationCustomer);
+        btnDestLocation = mView.findViewById(R.id.btnDestLocation);
     }
 
 }

@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Project_GHN"
         tools:targetApi="31">
         <activity
+            android:name=".view.activity.DetailProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.GoogleMapActivity"
             android:exported="false" />
         <activity

@@ -86,11 +86,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             replaceFragment(new CreateOrderFragment());
             navigationView.getMenu().findItem(R.id.nav_create_order).setChecked(true);
         } else if (id == R.id.nav_list_current_order) {
-            //Changed to test Google map. previous: Intent intent = new Intent(MainActivity.this, ListOrderActivity.class);
-            Intent intent = new Intent(MainActivity.this, CustomerCreateOrderActivity3.class);
+            //Changed to test Google map. previous:
+
+            Intent intent = new Intent(MainActivity.this, ListOrderActivity.class);
             startActivity(intent);
         }
-
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
