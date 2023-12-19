@@ -2,10 +2,8 @@ package tdtu.edu.project_ghn.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -27,13 +25,15 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
         btnMap = findViewById(R.id.btnMap);
         txtAddress = findViewById(R.id.txtAddress);
 
+        String address = getIntent().getStringExtra("address");
+        txtAddress.setText(address);
+
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CustomerCreateOrderActivity3.this, GoogleMapActivity.class);
                 intent.putExtra("address", txtAddress.getText().toString());
                 startActivity(intent);
-                finish();
             }
         });
     }

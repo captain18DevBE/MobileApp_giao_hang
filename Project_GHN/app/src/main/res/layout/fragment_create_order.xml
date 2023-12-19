@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,20 +26,16 @@
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:textStyle="italic"
-                android:text="Địa chỉ người gửi:"
+                android:text="Địa chỉ shop:"
                 />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLocationCustomer"
+            <TextView
+                android:id="@+id/txtShopAddress"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:text="Quận 7"
-                android:textSize="13sp"
-                android:textColor="@color/black"
-                app:strokeColor="@color/black"
-                android:backgroundTint="@color/white"
-                app:strokeWidth="1dp"
-                />
+                android:gravity="center"
+                android:textSize="15dp"
+                android:text="Đại học Tôn Đức Thắng" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -47,17 +44,31 @@
                 android:textStyle="italic"
                 android:text="Địa chỉ người nhận:"
                 />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnDestLocation"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:text="Quận 1"
-                android:textSize="13sp"
-                android:textColor="@color/black"
-                app:strokeColor="@color/black"
-                android:backgroundTint="@color/white"
-                app:strokeWidth="1dp"
-                />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/txtAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:hint="Địa chỉ người nhận"/>
+
+                <ImageButton
+                    android:id="@+id/btnMap2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@android:drawable/ic_dialog_map"
+                    tools:src="@android:drawable/ic_dialog_map" />
+
+
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -79,10 +90,11 @@
                 android:text="Thời gian giao hàng ước tính:"/>
 
             <TextView
+                android:id="@+id/txtTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="italic"
-                android:text="1 giờ 30 phút"/>
+                android:text="1 giờ 30 phút"
+                android:textStyle="italic" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
