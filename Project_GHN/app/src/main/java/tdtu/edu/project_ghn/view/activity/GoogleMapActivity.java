@@ -41,7 +41,6 @@ public class GoogleMapActivity extends AppCompatActivity implements OnMapReadyCa
         mapFragment.getMapAsync(this);
     }
 
-
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         gMap = googleMap;

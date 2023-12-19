@@ -45,6 +45,9 @@ dependencies {
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 
+    // Declare the dependency for the Cloud Firestore library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-firestore")
 
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
@@ -73,4 +76,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.android.gms/play-services-maps
     implementation("com.google.android.gms:play-services-maps:18.2.0")
 
+    implementation ("androidx.camera:camera-core:1.2.2")
+    implementation ("androidx.camera:camera-camera2:1.2.2")
+    implementation ("androidx.camera:camera-lifecycle:1.2.2")
+    implementation ("androidx.camera:camera-view:1.2.2")
 }
