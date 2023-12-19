@@ -1,6 +1,7 @@
 package tdtu.edu.project_ghn.view.fragment;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +20,11 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import tdtu.edu.project_ghn.MainActivity;
 import tdtu.edu.project_ghn.R;
+import tdtu.edu.project_ghn.view.activity.DetailProductActivity;
 
 public class CreateOrderFragment extends Fragment {
     private View mView;
-    private Button spaceChoseService, spaceChoseTransport, btnCheapService, btnFastService, btnMotorbike, btnTricycles;
+    private Button spaceChoseService, spaceChoseTransport, btnCheapService, btnFastService, btnMotorbike, btnTricycles, btnNextToDesProduct;
     public CreateOrderFragment() {}
 
     @Nullable
@@ -46,6 +48,14 @@ public class CreateOrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showOptionTransport();
+            }
+        });
+
+        btnNextToDesProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DetailProductActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -107,6 +117,7 @@ public class CreateOrderFragment extends Fragment {
     private void initUI() {
         spaceChoseService = mView.findViewById(R.id.space_choseService);
         spaceChoseTransport = mView.findViewById(R.id.space_choseTransport);
+        btnNextToDesProduct = mView.findViewById(R.id.btnNextToDesProduct);
     }
 
 }
