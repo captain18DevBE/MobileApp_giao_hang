@@ -2,11 +2,24 @@ package tdtu.edu.project_ghn.entity;
 
 import android.media.Image;
 
-public class Product {
+import java.io.File;
+import java.io.Serializable;
+
+public class Product implements Serializable {
+
     private float weight;
     private String productSize;
     private String productType;
-    private byte[] imgData;
+
+    public File getImgData() {
+        return imgData;
+    }
+
+    public void setImgData(File imgData) {
+        this.imgData = imgData;
+    }
+
+    private File imgData;
     private String typeOfInsurance;
 
     public Product() {
@@ -16,7 +29,6 @@ public class Product {
         this.weight = weight;
         this.productSize = productSize;
         this.productType = productType;
-        this.imgData = imgData;
         this.typeOfInsurance = typeOfInsurance;
     }
 
@@ -44,13 +56,6 @@ public class Product {
         this.productType = productType;
     }
 
-    public byte[] getImgData() {
-        return imgData;
-    }
-
-    public void setImgData(byte[] imgData) {
-        this.imgData = imgData;
-    }
 
     public String getTypeOfInsurance() {
         return typeOfInsurance;
