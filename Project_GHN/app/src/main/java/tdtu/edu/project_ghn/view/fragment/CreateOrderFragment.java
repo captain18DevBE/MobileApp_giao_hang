@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -42,11 +43,13 @@ import tdtu.edu.project_ghn.view.activity.GoogleMapActivity;
 
 public class CreateOrderFragment extends Fragment {
     private View mView;
-    private Button spaceChoseService, spaceChoseTransport, btnCheapService, btnFastService, btnMotorbike,
+    private Button btnCheapService, btnFastService, btnMotorbike,
             btnTricycles, btnNextToDesProduct;
+    private MaterialButton spaceChoseService, spaceChoseTransport;
     private ImageButton btnMap;
     private EditText txtAddress;
     private TextView txtShopAddress, txtTime;
+    private String chosenService = "cheap", chosenTransport="bike";
     public CreateOrderFragment() {}
 
     @Nullable
@@ -85,9 +88,9 @@ public class CreateOrderFragment extends Fragment {
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), GoogleMapActivity.class);
-                intent.putExtra("address", txtAddress.getText().toString());
-                startActivity(intent);
+                    Intent intent = new Intent(getActivity(), GoogleMapActivity.class);
+                    intent.putExtra("address", txtAddress.getText().toString());
+                    startActivity(intent);
             }
         });
 
@@ -121,6 +124,8 @@ public class CreateOrderFragment extends Fragment {
         btnMotorbike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chosenTransport="bike";
+                updateTransportButtonAppearance();
                 dialog.dismiss();
             }
         });
@@ -128,6 +133,8 @@ public class CreateOrderFragment extends Fragment {
         btnTricycles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chosenTransport="tricycle";
+                updateTransportButtonAppearance();
                 dialog.dismiss();
             }
         });
@@ -147,7 +154,9 @@ public class CreateOrderFragment extends Fragment {
         btnCheapService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Cheap service", Toast.LENGTH_SHORT).show();
+                chosenService = "cheap";
+                updateServiceButtonAppearance();
+                new GeocodingTask().execute(txtShopAddress.getText().toString(), txtAddress.getText().toString());
                 dialog.dismiss();
             }
 
@@ -156,14 +165,36 @@ public class CreateOrderFragment extends Fragment {
         btnFastService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Faster service", Toast.LENGTH_SHORT).show();
+                chosenService="fast";
+                updateServiceButtonAppearance();
+                new GeocodingTask().execute(txtShopAddress.getText().toString(), txtAddress.getText().toString());
                 dialog.dismiss();
             }
         });
         dialog.show();
     }
 
-    //Move calculate to background to reduce llag
+    private void updateServiceButtonAppearance() {
+        if (chosenService.equals("cheap")) {
+            spaceChoseService.setIcon(getResources().getDrawable(R.drawable.product));
+            spaceChoseService.setText("Tiết kiệm: 30.000 VND");
+        } else if (chosenService.equals("fast")) {
+            spaceChoseService.setIcon(getResources().getDrawable(R.drawable.fast_product));
+            spaceChoseService.setText("Siêu tốc: 100.000 VND");
+        }
+    }
+
+    private void updateTransportButtonAppearance() {
+        if (chosenTransport.equals("bike")) {
+            spaceChoseTransport.setIcon(getResources().getDrawable(R.drawable.fast_delivery));
+            spaceChoseTransport.setText("Xe máy: 30.000 VND");
+        } else if (chosenTransport.equals("tricycle")) {
+            spaceChoseTransport.setIcon(getResources().getDrawable(R.drawable.tricycle));
+            spaceChoseTransport.setText("Xe ba gác: 300.000 VND");
+        }
+    }
+
+    //Move calculate to background to reduce lag
     private class GeocodingTask extends AsyncTask<String, Void, Float> {
         @Override
         protected Float doInBackground(String... addresses) {
@@ -190,25 +221,39 @@ public class CreateOrderFragment extends Fragment {
         @Override
         protected void onPostExecute(Float distanceInMeters) {
             if (distanceInMeters != null) {
-                //Change 40km/h average speed to m/s (1 km/h = 1000 m/3600 s)
-                float speed = 40 * 1000f / 3600f;
+
+                float speed = 10 * 1000f / 3600f;
+                //Speed base on service
+                if (chosenService.equals("cheap")) {
+                        speed = 10 * 1000f / 3600f;
+                } else {
+                        speed = 30 * 1000f / 3600f;
+                }
+
 
                 float timeInSeconds = distanceInMeters / speed;
 
-                //Convert time to hours and minutes
-                int hours = (int) (timeInSeconds / 3600);
+                //Convert time to days, hours, and minutes
+                int days = (int) (timeInSeconds / 86400);
+                int hours = (int) ((timeInSeconds % 86400) / 3600);
                 int minutes = (int) ((timeInSeconds % 3600) / 60);
-                if (minutes == 0 && hours == 0) {
+
+                if (days == 0 && hours == 0 && minutes == 0) {
                     txtTime.setText("Vị trí người nhận không phải vị trí shop");
-                }
-                else if (hours == 0) {
+                } else if (days == 0 && hours == 0) {
                     txtTime.setText(minutes + " phút");
-                }
-                else if (minutes == 0) {
+                } else if (days == 0 && minutes == 0) {
                     txtTime.setText(hours + " giờ");
-                }
-                else {
+                } else if (hours == 0 && minutes == 0) {
+                    txtTime.setText(days + " ngày");
+                } else if (days == 0) {
                     txtTime.setText(hours + " giờ " + minutes + " phút");
+                } else if (hours == 0) {
+                    txtTime.setText(days + " ngày " + minutes + " phút");
+                } else if (minutes == 0) {
+                    txtTime.setText(days + " ngày " + hours + " giờ");
+                } else {
+                    txtTime.setText(days + " ngày " + hours + " giờ " + minutes + " phút");
                 }
             }
         }

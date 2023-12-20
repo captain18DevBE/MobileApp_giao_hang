@@ -93,7 +93,7 @@
                 android:id="@+id/txtTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1 giờ 30 phút"
+                android:text="(không hoàn toàn chính xác)"
                 android:textStyle="italic" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -114,17 +114,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Dịch vụ giao hàng"/>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/space_choseService"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:text="Siêu tốc: 100.000 VND"
-                android:textSize="13sp"
-                android:textColor="@color/black"
-                app:strokeColor="@color/black"
                 android:backgroundTint="@color/white"
-                app:strokeWidth="1dp"
-                />
+                android:text="Tiết kiệm: 30.000 VND"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                app:icon="@drawable/product"
+                app:iconTint="@color/black"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -149,13 +151,14 @@
                 android:id="@+id/space_choseTransport"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:text="Siêu tốc: 100.000 VND"
-                android:textSize="13sp"
-                android:textColor="@color/black"
-                app:strokeColor="@color/black"
                 android:backgroundTint="@color/white"
-                app:strokeWidth="1dp"
-                />
+                android:text="Xe máy: 30.000 VND"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                app:icon="@drawable/fast_delivery"
+                app:iconTint="@color/black"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp" />
 
         </LinearLayout>
 

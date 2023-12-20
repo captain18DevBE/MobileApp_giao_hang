@@ -84,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
                 android:textStyle="italic"
+                android:gravity="center"
                 android:text="Trọng lượng: (Kilogam (kg))"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -92,7 +93,7 @@
                 android:gravity="center">
                 <EditText
                     android:id="@+id/editTextNumber"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="number" />
@@ -230,8 +231,13 @@
     <Button
         android:id="@+id/btnContinue"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:text="Tiếp tục"/>
+        android:layout_width="170dp"
+        android:layout_height="55dp"
+        android:text="Tiếp tục"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        app:strokeColor="@color/main_color"
+        android:backgroundTint="#3E3AF4"
+        app:strokeWidth="1dp"
+        android:layout_marginTop="50dp" />
 </androidx.appcompat.widget.LinearLayoutCompat>
