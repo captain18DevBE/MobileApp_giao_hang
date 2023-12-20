@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import tdtu.edu.project_ghn.controller.CustomerController;
+import tdtu.edu.project_ghn.entity.Customer;
 import tdtu.edu.project_ghn.view.activity.ChosseAccountActivity;
 import tdtu.edu.project_ghn.view.activity.CustomerCreateOrderActivity3;
 import tdtu.edu.project_ghn.view.activity.ListOrderActivity;
@@ -42,8 +44,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //test api
+        CustomerController customerController = new CustomerController();
+        Customer tmp = new Customer();
+        customerController.signUp(tmp);
 
-
+        //test api
         initUI();
         buildNavigation();
         initListener();

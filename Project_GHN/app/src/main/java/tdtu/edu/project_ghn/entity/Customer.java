@@ -5,16 +5,16 @@ public class Customer {
     public String fullName;
     public String address;
     public String phoneNumber;
-    public String roleId;
+    public int roleId;
 
     //List product
 
 
-    public String getRoleId() {
+    public int getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(String roleId) {
+    public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
 

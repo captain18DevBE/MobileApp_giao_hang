@@ -55,7 +55,6 @@ public class DetailProductActivity extends AppCompatActivity {
             String imgPath = data.getStringExtra("imgPath");
 //            /storage/emulated/0/Android/data/tdtu.edu.project_ghn/files/1703058173162.jpg
             Log.d("image_path", imgPath);
-
         }
     }
 
