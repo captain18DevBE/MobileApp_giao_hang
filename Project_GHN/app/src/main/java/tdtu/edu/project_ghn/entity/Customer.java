@@ -5,17 +5,17 @@ public class Customer {
     public String fullName;
     public String address;
     public String phoneNumber;
-    public int roleId;
+    public String role;
 
     //List product
 
 
-    public int getRoleId() {
-        return roleId;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {

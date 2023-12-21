@@ -14,10 +14,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import tdtu.edu.project_ghn.controller.CustomerController;
 import tdtu.edu.project_ghn.entity.Customer;
@@ -31,30 +33,33 @@ import tdtu.edu.project_ghn.view.fragment.ListOrderFragment;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int FRAGMENT_LIST_ORDER = 0;
-
     //test
     private int mCurrentFragment = FRAGMENT_LIST_ORDER;
     //test
-    private FirebaseAuth user;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     Toolbar toolbar;
+    TextView txtNav_UserName, txtNav_UserEmail;
+    View header;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //test api
-        CustomerController customerController = new CustomerController();
-        Customer tmp = new Customer();
-        customerController.signUp(tmp);
-
-        //test api
         initUI();
         buildNavigation();
         initListener();
 
+        updateUI();
+
         navigationView.getMenu().findItem(R.id.nav_list_current_order).setChecked(true);
+    }
+
+    private void updateUI() {
+        String email = user.getEmail();
+
+        txtNav_UserEmail.setText(email);
     }
 
     private void buildNavigation() {
@@ -63,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainActivity.this, mDrawerLayout, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
     }
 
@@ -76,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_viewMainActivity);
 
+        header = navigationView.getHeaderView(0);
+        txtNav_UserEmail =  header.findViewById(R.id.txtNav_UserEmail);
+        txtNav_UserName = header.findViewById(R.id.txtNav_UserName);
     }
 
     @Override

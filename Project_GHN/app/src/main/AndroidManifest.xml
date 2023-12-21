@@ -24,6 +24,9 @@
         android:theme="@style/Theme.Project_GHN"
         tools:targetApi="31">
         <activity
+            android:name=".view.activity.CustomerProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.CameraXActivity"
             android:exported="false" />
         <activity
