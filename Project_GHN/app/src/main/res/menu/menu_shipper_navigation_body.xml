@@ -8,7 +8,11 @@
             <menu>
                 <item
                     android:id="@+id/nav_list_current_order"
-                    android:title="@string/nav_list_order"
+                    android:title="Đơn hàng mới"
+                    android:icon="@drawable/list_order"/>
+                <item
+                    android:id="@+id/nav_list_acceipt_order"
+                    android:title="Đơn đã nhận"
                     android:icon="@drawable/list_order"/>
             </menu>
         </item>
