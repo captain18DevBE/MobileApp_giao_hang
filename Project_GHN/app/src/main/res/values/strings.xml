@@ -22,4 +22,5 @@
     <string name="nav_list_order_current">Đang giao</string>
     <string name="nav_list_order_history">Lịch sử</string>
     <!--    for shipper-->
+    <string name="nav_change_info">Đổi thông tin</string>
 </resources>

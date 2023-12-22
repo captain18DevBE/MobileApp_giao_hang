@@ -24,10 +24,14 @@ import com.google.firebase.auth.FirebaseUser;
 
 import tdtu.edu.project_ghn.controller.CustomerController;
 import tdtu.edu.project_ghn.entity.Customer;
+import tdtu.edu.project_ghn.view.activity.ChangeCustomerPassActivity;
 import tdtu.edu.project_ghn.view.activity.ChosseAccountActivity;
 import tdtu.edu.project_ghn.view.activity.CustomerCreateOrderActivity3;
 import tdtu.edu.project_ghn.view.activity.CustomerProfileActivity;
+import tdtu.edu.project_ghn.view.activity.CustomerOrderDetailActivity;
 import tdtu.edu.project_ghn.view.activity.ListOrderActivity;
+import tdtu.edu.project_ghn.view.activity.ShipperInfoUpdate;
+import tdtu.edu.project_ghn.view.activity.ShipperOrderDetailActivity;
 import tdtu.edu.project_ghn.view.fragment.CreateOrderFragment;
 import tdtu.edu.project_ghn.view.fragment.ListOrderFragment;
 
@@ -111,7 +115,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             replaceFragment(new CreateOrderFragment());
             navigationView.getMenu().findItem(R.id.nav_create_order).setChecked(true);
         } else if (id == R.id.nav_list_current_order) {
-            Intent intent = new Intent(MainActivity.this, ListOrderActivity.class);
+            //Changed to test. Previous:
+             Intent intent = new Intent(MainActivity.this, ListOrderActivity.class);
+//            Intent intent = new Intent(MainActivity.this, CustomerOrderDetailActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_changeInformation) {
+            //Customer info update is not created, tested using shipper's
+            Intent intent = new Intent(MainActivity.this, ShipperInfoUpdate.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_changePass) {
+            Intent intent = new Intent(MainActivity.this, ChangeCustomerPassActivity.class);
             startActivity(intent);
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);

@@ -14,7 +14,6 @@
             app:cardElevation="15dp"
             android:layout_margin="10dp"
             android:translationY="14dp"
-
             >
             <ImageView
                 android:id="@+id/img_nav_UserImg"
@@ -32,6 +31,7 @@
             android:layout_height="30dp"
             android:translationY="-15dp"
             android:backgroundTint="@color/main_color"
+            android:background="@android:color/transparent"
             android:translationX="35dp"
             app:iconTint="@color/white"
             app:icon="@drawable/edit_profile_user"/>

@@ -45,7 +45,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="400dp"
+        android:layout_width="0dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
         android:minWidth="200dp"
@@ -70,6 +71,7 @@
             app:hintTextColor="#48AA38">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtShipperCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -100,6 +102,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnLoginShipper"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
