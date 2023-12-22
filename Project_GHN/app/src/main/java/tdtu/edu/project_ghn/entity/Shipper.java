@@ -5,8 +5,27 @@ public class Shipper {
     public String fullName;
     public String address;
     public String phoneNumber;
+    public String typeOfTransport;
     public int roleId;
 
+    public Shipper() {}
+
+    public Shipper(String email, String fullName, String address, String phoneNumber, String typeOfTransport, int roleId) {
+        this.email = email;
+        this.fullName = fullName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.typeOfTransport = typeOfTransport;
+        this.roleId = roleId;
+    }
+
+    public String getTypeOfTransport() {
+        return typeOfTransport;
+    }
+
+    public void setTypeOfTransport(String typeOfTransport) {
+        this.typeOfTransport = typeOfTransport;
+    }
 
     public String getEmail() {
         return email;

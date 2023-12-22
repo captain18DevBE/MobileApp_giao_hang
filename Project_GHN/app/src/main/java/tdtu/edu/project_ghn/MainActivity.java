@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import tdtu.edu.project_ghn.controller.CustomerController;
 import tdtu.edu.project_ghn.entity.Customer;
 import tdtu.edu.project_ghn.view.activity.ChosseAccountActivity;
 import tdtu.edu.project_ghn.view.activity.CustomerCreateOrderActivity3;
+import tdtu.edu.project_ghn.view.activity.CustomerProfileActivity;
 import tdtu.edu.project_ghn.view.activity.ListOrderActivity;
 import tdtu.edu.project_ghn.view.fragment.CreateOrderFragment;
 import tdtu.edu.project_ghn.view.fragment.ListOrderFragment;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     Toolbar toolbar;
     TextView txtNav_UserName, txtNav_UserEmail;
+    Button btnNextToProfileCustomer;
     View header;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +75,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initListener() {
-
+        btnNextToProfileCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CustomerProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initUI() {
@@ -81,8 +90,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_viewMainActivity);
 
         header = navigationView.getHeaderView(0);
+
         txtNav_UserEmail =  header.findViewById(R.id.txtNav_UserEmail);
         txtNav_UserName = header.findViewById(R.id.txtNav_UserName);
+
+        btnNextToProfileCustomer = header.findViewById(R.id.btnNextToProfileCustomer);
     }
 
     @Override

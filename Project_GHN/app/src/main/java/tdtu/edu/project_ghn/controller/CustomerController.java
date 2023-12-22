@@ -1,5 +1,13 @@
 package tdtu.edu.project_ghn.controller;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -8,11 +16,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import tdtu.edu.project_ghn.entity.Customer;
+import tdtu.edu.project_ghn.view.activity.CustomerProfileActivity;
 
 public class CustomerController {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     Customer customer;
+
     public boolean signUp(Customer customer) {
         boolean result = false;
 
@@ -36,5 +46,27 @@ public class CustomerController {
             }
         });
         return customer;
+    }
+
+    //update detail information of customer
+    public void updateCustomerInf(Customer resp) {
+        DocumentReference documentReference = db.collection("customers").document(resp.getEmail());
+
+        documentReference
+                .update(
+                    "fullName", resp.getFullName(),
+                        "address", resp.getAddress(),
+                        "phoneNumber", resp.getPhoneNumber()
+                ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("cap nhat thong tin", "thanh cong");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("cap nhat thong tin", "that bai");
+                    }
+                });
     }
 }
