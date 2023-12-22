@@ -36,6 +36,9 @@
             android:name=".view.activity.ShipperInfoUpdate"
             android:exported="false" />
         <activity
+            android:name=".view.activity.CustomerProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.CameraXActivity"
             android:exported="false" />
         <activity
