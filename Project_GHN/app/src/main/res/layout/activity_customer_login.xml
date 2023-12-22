@@ -71,7 +71,7 @@
             app:hintTextColor="#48AA38">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtUserNameCustomer"
+                android:id="@+id/edtShopOwnerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -95,7 +95,7 @@
             app:hintTextColor="#48AA38">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtPassCustomer"
+                android:id="@+id/edtShopPhone1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />

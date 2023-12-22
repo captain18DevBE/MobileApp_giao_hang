@@ -93,8 +93,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
         btnCustomerSignUp = findViewById(R.id.btnSignUp);
         btnCustomerLogin = findViewById(R.id.btnLogin);
         toolbar = findViewById(R.id.toolbar);
-        edtUserName = findViewById(R.id.edtUserNameCustomer);
-        edtPassWord = findViewById(R.id.edtPassCustomer);
+        edtUserName = findViewById(R.id.edtShopOwnerName);
+        edtPassWord = findViewById(R.id.edtShopPhone1);
         tvAlertLogin = findViewById(R.id.tvAlertLogin);
     }
 

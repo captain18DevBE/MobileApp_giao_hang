@@ -7,10 +7,6 @@
             >
             <menu>
                 <item
-                    android:id="@+id/nav_create_order"
-                    android:title="@string/nav_create_order"
-                    android:icon="@drawable/baseline_receipt_24"/>
-                <item
                     android:id="@+id/nav_list_current_order"
                     android:title="@string/nav_list_order"
                     android:icon="@drawable/list_order"/>
