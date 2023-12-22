@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void updateUI() {
         String email = user.getEmail();
-
         txtNav_UserEmail.setText(email);
     }
 

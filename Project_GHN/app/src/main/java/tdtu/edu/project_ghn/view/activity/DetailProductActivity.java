@@ -1,7 +1,10 @@
 package tdtu.edu.project_ghn.view.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -9,14 +12,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import tdtu.edu.project_ghn.R;
+import tdtu.edu.project_ghn.entity.DeliverOrder;
 
 public class DetailProductActivity extends AppCompatActivity {
 
     Button btnContinue, btnChose_imgProduct;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +31,31 @@ public class DetailProductActivity extends AppCompatActivity {
 
         initUI();
         initListener();
+        buildMenu();
 
+        DeliverOrder deliverOrder = (DeliverOrder) getIntent().getSerializableExtra("deliverOrder");
+        Log.d("testdata", deliverOrder.getService());
+    }
+
+    private void buildMenu() {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Thông tin gói hàng");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail_product, menu);
+        return true;
     }
 
     private void initListener() {
@@ -61,5 +92,6 @@ public class DetailProductActivity extends AppCompatActivity {
     private void initUI() {
         btnContinue = findViewById(R.id.btnContinue);
         btnChose_imgProduct = findViewById(R.id.chose_imgProduct);
+        toolbar = findViewById(R.id.toolbar);
     }
 }

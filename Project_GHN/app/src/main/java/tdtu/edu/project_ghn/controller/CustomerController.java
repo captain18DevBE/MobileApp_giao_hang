@@ -15,13 +15,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import tdtu.edu.project_ghn.controller.service.OnGetCustomerByEmail;
 import tdtu.edu.project_ghn.entity.Customer;
 import tdtu.edu.project_ghn.view.activity.CustomerProfileActivity;
 
 public class CustomerController {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    Customer customer;
 
     public boolean signUp(Customer customer) {
         boolean result = false;
@@ -37,15 +37,22 @@ public class CustomerController {
     }
 
     //get customer by email
-    public Customer getByEmail(String email) {
+    public void getByEmail(String email, final OnGetCustomerByEmail listener) {
         DocumentReference docRef = db.collection("customers").document(email);
+
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                customer = documentSnapshot.toObject(Customer.class);
+                Customer customer = documentSnapshot.toObject(Customer.class);
+                Log.d("firebase", "lay du lieu thanh cong");
+                listener.onSuccess(customer);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listener.onFailure(e.getMessage());
             }
         });
-        return customer;
     }
 
     //update detail information of customer

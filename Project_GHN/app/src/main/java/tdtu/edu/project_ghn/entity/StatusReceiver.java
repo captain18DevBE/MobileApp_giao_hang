@@ -1,5 +1,8 @@
 package tdtu.edu.project_ghn.entity;
 
-public class StatusReceiver {
+import java.io.Serializable;
 
+public class StatusReceiver implements Serializable {
+    private int statusId;
+    private String description;
 }

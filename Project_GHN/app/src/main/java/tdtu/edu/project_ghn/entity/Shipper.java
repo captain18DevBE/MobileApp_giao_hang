@@ -1,6 +1,8 @@
 package tdtu.edu.project_ghn.entity;
 
-public class Shipper {
+import java.io.Serializable;
+
+public class Shipper implements Serializable {
     public String email;
     public String fullName;
     public String address;

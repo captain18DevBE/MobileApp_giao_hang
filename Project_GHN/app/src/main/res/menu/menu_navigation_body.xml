@@ -20,10 +20,6 @@
     </group>
     <item android:title="@string/nav_account">
         <menu>
-            <item
-                android:id="@+id/nav_changeInformation"
-                android:icon="@android:drawable/ic_menu_manage"
-                android:title="@string/nav_change_info" />
             <item android:title="@string/nav_account_security"
                 android:id="@+id/nav_changePass"
                 android:icon="@drawable/baseline_lock_person_24"/>

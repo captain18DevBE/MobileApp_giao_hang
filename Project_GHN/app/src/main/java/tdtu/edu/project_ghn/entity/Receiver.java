@@ -1,6 +1,8 @@
 package tdtu.edu.project_ghn.entity;
 
-public class Receiver {
+import java.io.Serializable;
+
+public class Receiver implements Serializable {
     private String fullName;
     private String phoneNumber;
     private String address;

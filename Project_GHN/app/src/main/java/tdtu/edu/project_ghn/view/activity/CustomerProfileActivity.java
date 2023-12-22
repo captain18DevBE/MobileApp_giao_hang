@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.controller.CustomerController;
+import tdtu.edu.project_ghn.controller.service.OnGetCustomerByEmail;
 import tdtu.edu.project_ghn.entity.Customer;
 
 public class CustomerProfileActivity extends AppCompatActivity {
@@ -27,8 +29,27 @@ public class CustomerProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer_profile);
         
         initUI();
-        
+        updateUI();
         updateCustomerInf();
+    }
+
+    private void updateUI() {
+        customerController.getByEmail(user.getEmail(), new OnGetCustomerByEmail() {
+            @Override
+            public void onSuccess(Customer customer) {
+                edt_CustomerFullNameUpdate.setText(customer.getFullName());
+                edt_CustomerAddressUpdate.setText(customer.getAddress());
+                edt_CustomerPhoneNumberUpdate.setText(customer.getPhoneNumber());
+
+                //get image
+
+            }
+            @Override
+            public void onFailure(String msgErr) {
+                Toast.makeText(CustomerProfileActivity.this, "Đã có lỗi xảy ra!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void initUI() {

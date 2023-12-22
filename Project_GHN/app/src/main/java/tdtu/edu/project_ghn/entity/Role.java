@@ -1,6 +1,8 @@
 package tdtu.edu.project_ghn.entity;
 
-public class Role {
+import java.io.Serializable;
+
+public class Role implements Serializable {
     private int roleId;
     private String roleName;
 

@@ -30,6 +30,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +39,8 @@ import java.util.Locale;
 
 import tdtu.edu.project_ghn.MainActivity;
 import tdtu.edu.project_ghn.R;
+import tdtu.edu.project_ghn.entity.Customer;
+import tdtu.edu.project_ghn.entity.DeliverOrder;
 import tdtu.edu.project_ghn.view.activity.CustomerCreateOrderActivity3;
 import tdtu.edu.project_ghn.view.activity.DetailProductActivity;
 import tdtu.edu.project_ghn.view.activity.GoogleMapActivity;
@@ -50,6 +54,8 @@ public class CreateOrderFragment extends Fragment {
     private EditText txtAddress;
     private TextView txtShopAddress, txtTime;
     private String chosenService = "cheap", chosenTransport="bike";
+    private DeliverOrder deliverOrder = new DeliverOrder();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     public CreateOrderFragment() {}
 
     @Nullable
@@ -80,7 +86,15 @@ public class CreateOrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DetailProductActivity.class);
+                //get deliverOrder properties
+
+                deliverOrder.setCustomerAddress(user.getEmail());
+                deliverOrder.setReceiverAddress(txtAddress.getText().toString().trim());
+                deliverOrder.setService(chosenService);
+                deliverOrder.setTypeOfTransport(chosenTransport);
+
                 intent.putExtra("address", txtAddress.getText().toString());
+                intent.putExtra("deliverOrder", deliverOrder);
                 startActivity(intent);
             }
         });
@@ -112,6 +126,7 @@ public class CreateOrderFragment extends Fragment {
         });
 
     }
+
     private void showOptionTransport() {
         Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
