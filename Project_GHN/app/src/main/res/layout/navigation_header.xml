@@ -36,7 +36,7 @@
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:translationY="-15dp"
-            android:background=""
+            android:background="@android:color/transparent"
             android:translationX="35dp"
             app:iconTint="@color/white"
             app:icon="@drawable/edit_profile_user"/>

@@ -35,12 +35,6 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipper_main);
 
-        //test api
-        CustomerController customerController = new CustomerController();
-        Customer tmp = new Customer();
-        customerController.signUp(tmp);
-
-        //test api
         initUI();
         buildNavigation();
         initListener();
