@@ -26,7 +26,6 @@
         />
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,25 +50,25 @@
                 android:gravity="center">
 
                 <RadioButton
-                    android:id="@+id/radioButton3"
+                    android:id="@+id/radio_Size_S"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="S" />
 
                 <RadioButton
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/radio_Size_M"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="M" />
 
                 <RadioButton
-                    android:id="@+id/radioButton"
+                    android:id="@+id/radio_Size_L"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="L" />
 
                 <RadioButton
-                    android:id="@+id/radioButton4"
+                    android:id="@+id/radio_Size_XL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="XL" />
@@ -156,21 +155,21 @@
             android:gravity="center">
 
             <RadioButton
-                android:id="@+id/radioButton6"
+                android:id="@+id/radio_Type_TP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thực phẩm"
                 android:padding="5dp"/>
 
             <RadioButton
-                android:id="@+id/radioButton21"
+                android:id="@+id/radio_Type_TT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Thời trang" />
 
             <RadioButton
-                android:id="@+id/radioButton22"
+                android:id="@+id/radio_Type_DT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -206,7 +205,7 @@
             android:orientation="horizontal"
             android:gravity="center">
             <RadioButton
-                android:id="@+id/radioButton61"
+                android:id="@+id/radio_insurance_default"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -214,7 +213,7 @@
                 android:padding="5dp"/>
 
             <RadioButton
-                android:id="@+id/radioButton213"
+                android:id="@+id/radio_insurance_normal"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -222,7 +221,7 @@
                 android:text="Tiêu chuẩn\n(4.000đ)" />
 
             <RadioButton
-                android:id="@+id/radioButton224"
+                android:id="@+id/radio_insurance_advance"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"

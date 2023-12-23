@@ -8,18 +8,26 @@ public class Receiver implements Serializable {
     private String address;
     private String detailLocal;
     private String notes;
-    private double amountPay;
+    private boolean isPaid;
 
     public Receiver() {
     }
 
-    public Receiver(String fullName, String phoneNumber, String address, String detailLocal, String notes, double amountPay) {
+    public Receiver(String fullName, String phoneNumber, String address, String detailLocal, String notes, boolean amountPay) {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.detailLocal = detailLocal;
         this.notes = notes;
-        this.amountPay = amountPay;
+        this.isPaid = amountPay;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.isPaid = paid;
     }
 
     public String getFullName() {
@@ -62,11 +70,4 @@ public class Receiver implements Serializable {
         this.notes = notes;
     }
 
-    public double getAmountPay() {
-        return amountPay;
-    }
-
-    public void setAmountPay(double amountPay) {
-        this.amountPay = amountPay;
-    }
 }

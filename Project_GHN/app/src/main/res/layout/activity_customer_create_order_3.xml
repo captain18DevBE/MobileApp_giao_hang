@@ -76,6 +76,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAddressDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tầng 10,.." />
@@ -94,6 +95,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_ReceiverName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nguyễn Văn A" />
@@ -112,6 +114,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_ReceiverPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="0901XXXXXX" />
@@ -130,6 +133,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_ReceiverNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="(có thể bỏ trống)" />
@@ -192,7 +196,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnFinishOrder"
         android:layout_gravity="center"
         android:layout_width="170dp"
         android:layout_height="55dp"

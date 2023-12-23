@@ -16,14 +16,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.RadioButton;
 
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.entity.DeliverOrder;
+import tdtu.edu.project_ghn.entity.Product;
 
 public class DetailProductActivity extends AppCompatActivity {
 
     Button btnContinue, btnChose_imgProduct;
     Toolbar toolbar;
+    EditText editTextNumber;
+
+    DeliverOrder deliverOrder;
+
+    RadioButton radio_Size_S, radio_Size_M, radio_Size_L, radio_Size_XL,
+                radio_Type_TP, radio_Type_TT, radio_Type_DT,
+                radio_insurance_default, radio_insurance_normal, radio_insurance_advance;
+    private Product product = new Product();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +45,9 @@ public class DetailProductActivity extends AppCompatActivity {
         initListener();
         buildMenu();
 
-        DeliverOrder deliverOrder = (DeliverOrder) getIntent().getSerializableExtra("deliverOrder");
-        Log.d("testdata", deliverOrder.getService());
+        //get object data
+        deliverOrder = (DeliverOrder) getIntent().getSerializableExtra("deliverOrder");
+
     }
 
     private void buildMenu() {
@@ -62,9 +75,15 @@ public class DetailProductActivity extends AppCompatActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                product.setWeight(Float.parseFloat(editTextNumber.getText().toString().trim()));
                 String address = getIntent().getStringExtra("address");
                 Intent intent = new Intent(DetailProductActivity.this, CustomerCreateOrderActivity3.class);
+
+                deliverOrder.setProduct(product);
+                intent.putExtra("deliverOrder", deliverOrder);
                 intent.putExtra("address", address);
+
                 startActivity(intent);
             }
         });
@@ -75,6 +94,94 @@ public class DetailProductActivity extends AppCompatActivity {
                 Intent intent = new Intent(DetailProductActivity.this, CameraXActivity.class);
 
                 startActivityForResult(intent, 1234);
+            }
+        });
+
+        radio_Size_S.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    product.setProductSize(radio_Size_S.getText().toString().trim());
+                }
+            }
+        });
+
+        radio_Size_M.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    product.setProductSize(radio_Size_M.getText().toString().trim());
+                }
+            }
+        });
+
+        radio_Size_L.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    product.setProductSize(radio_Size_L.getText().toString().trim());
+                }
+            }
+        });
+
+        radio_Size_XL.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                product.setProductSize(radio_Size_XL.getText().toString().trim());
+            }
+        });
+
+        radio_Type_DT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    product.setProductType("dien tu");
+                }
+            }
+        });
+
+        radio_Type_TP.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    product.setProductType("thuc pham");
+                }
+            }
+        });
+
+        radio_Type_TT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    product.setProductType("thoi trang");
+                }
+            }
+        });
+
+        radio_insurance_normal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    product.setTypeOfInsurance("normal");
+                }
+            }
+        });
+
+        radio_insurance_default.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    product.setTypeOfInsurance("default");
+                }
+            }
+        });
+
+        radio_insurance_advance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    product.setTypeOfInsurance("advance");
+                }
             }
         });
     }
@@ -93,5 +200,20 @@ public class DetailProductActivity extends AppCompatActivity {
         btnContinue = findViewById(R.id.btnContinue);
         btnChose_imgProduct = findViewById(R.id.chose_imgProduct);
         toolbar = findViewById(R.id.toolbar);
+
+        radio_Size_S = findViewById(R.id.radio_Size_S);
+        radio_Size_M = findViewById(R.id.radio_Size_M);
+        radio_Size_L = findViewById(R.id.radio_Size_L);
+        radio_Size_XL = findViewById(R.id.radio_Size_XL);
+
+        radio_Type_TT = findViewById(R.id.radio_Type_TT);
+        radio_Type_TP = findViewById(R.id.radio_Type_TP);
+        radio_Type_DT = findViewById(R.id.radio_Type_DT);
+
+        radio_insurance_default = findViewById(R.id.radio_insurance_default);
+        radio_insurance_normal = findViewById(R.id.radio_insurance_normal);
+        radio_insurance_advance = findViewById(R.id.radio_insurance_advance);
+
+        editTextNumber = findViewById(R.id.editTextNumber);
     }
 }
