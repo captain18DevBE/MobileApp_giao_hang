@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import tdtu.edu.project_ghn.MainActivity;
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.ShipperMainActivity;
 
 public class ShipperLoginActivity extends AppCompatActivity {
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     Button btnLoginShipper;
     @Override

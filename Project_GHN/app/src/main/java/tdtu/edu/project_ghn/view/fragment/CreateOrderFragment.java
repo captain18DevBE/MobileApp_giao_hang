@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ import java.util.Locale;
 
 import tdtu.edu.project_ghn.MainActivity;
 import tdtu.edu.project_ghn.R;
+import tdtu.edu.project_ghn.controller.CustomerController;
+import tdtu.edu.project_ghn.controller.service.OnGetCustomerByEmail;
 import tdtu.edu.project_ghn.entity.Customer;
 import tdtu.edu.project_ghn.entity.DeliverOrder;
 import tdtu.edu.project_ghn.view.activity.CustomerCreateOrderActivity3;
@@ -56,6 +59,8 @@ public class CreateOrderFragment extends Fragment {
     private String chosenService = "cheap", chosenTransport="bike";
     private DeliverOrder deliverOrder = new DeliverOrder();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private Customer mCustomer;
+    private CustomerController customerController = new CustomerController();
     public CreateOrderFragment() {}
 
     @Nullable
@@ -64,6 +69,19 @@ public class CreateOrderFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_create_order, container, false);
         initUI();
         initListener();
+
+        customerController.getByEmail(user.getEmail(), new OnGetCustomerByEmail() {
+            @Override
+            public void onSuccess(Customer customer) {
+                mCustomer = customer;
+            }
+
+            @Override
+            public void onFailure(String msgErr) {
+                Log.d("Lay du lieu nguoi dung that bai", msgErr.toString());
+            }
+        });
+
         return mView;
     }
 
@@ -87,8 +105,8 @@ public class CreateOrderFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DetailProductActivity.class);
                 //get deliverOrder properties
+                deliverOrder.setCustomer(mCustomer);
 
-                deliverOrder.setCustomerAddress(user.getEmail());
                 deliverOrder.setReceiverAddress(txtAddress.getText().toString().trim());
                 deliverOrder.setService(chosenService);
                 deliverOrder.setTypeOfTransport(chosenTransport);

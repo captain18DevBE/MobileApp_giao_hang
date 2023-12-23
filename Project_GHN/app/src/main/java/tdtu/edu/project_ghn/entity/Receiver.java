@@ -9,21 +9,30 @@ public class Receiver implements Serializable {
     private String detailLocal;
     private String notes;
     private boolean isPaid;
-
+    private double amountPay;
     public Receiver() {
     }
 
-    public Receiver(String fullName, String phoneNumber, String address, String detailLocal, String notes, boolean amountPay) {
+    public Receiver(String fullName, String phoneNumber, String address, String detailLocal, String notes, boolean isPaid, double amountPay) {
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.detailLocal = detailLocal;
         this.notes = notes;
-        this.isPaid = amountPay;
+        this.isPaid = isPaid;
+        this.amountPay = amountPay;
     }
 
     public boolean isPaid() {
         return isPaid;
+    }
+
+    public double getAmountPay() {
+        return amountPay;
+    }
+
+    public void setAmountPay(double amountPay) {
+        this.amountPay = amountPay;
     }
 
     public void setPaid(boolean paid) {

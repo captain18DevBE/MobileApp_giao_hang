@@ -16,21 +16,27 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.time.LocalDateTime;
 import java.util.zip.Inflater;
 
 import tdtu.edu.project_ghn.R;
+import tdtu.edu.project_ghn.controller.DeliverOrderController;
+import tdtu.edu.project_ghn.controller.service.OnAddDeliverOrderListener;
 import tdtu.edu.project_ghn.entity.DeliverOrder;
 import tdtu.edu.project_ghn.entity.Product;
 import tdtu.edu.project_ghn.entity.Receiver;
 
 public class CustomerCreateOrderActivity3 extends AppCompatActivity {
 
-
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     ImageButton btnMap;
-    TextInputEditText txtAddress, edtAddressDetail, edt_ReceiverName, edt_ReceiverPhoneNumber, edt_ReceiverNotes;
+    TextInputEditText txtAddress, edtAddressDetail, edt_ReceiverName, edt_ReceiverPhoneNumber, edt_ReceiverNotes, edt_amount_paid;
     CheckBox checkBox;
     LinearLayout cashOnDelivery;
     Toolbar toolbar;
@@ -41,6 +47,7 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
     DeliverOrder deliverOrder;
 
     Receiver receiver = new Receiver();
+    DeliverOrderController deliverOrderController = new DeliverOrderController();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,10 +103,12 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     receiver.setPaid(true);
+                    receiver.setAmountPay(Double.parseDouble(edt_amount_paid.getText().toString().trim()));
                     cashOnDelivery.setVisibility(View.VISIBLE);
                 }
                 else {
                     receiver.setPaid(false);
+                    receiver.setAmountPay(0.0);
                     cashOnDelivery.setVisibility(View.GONE);
                 }
             }
@@ -113,6 +122,23 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
                 receiver.setFullName(edt_ReceiverName.getText().toString().trim());
                 receiver.setPhoneNumber(edt_ReceiverPhoneNumber.getText().toString().trim());
                 receiver.setNotes(edt_ReceiverNotes.getText().toString().trim());
+
+                deliverOrder.setReceiver(receiver);
+                LocalDateTime dateTime = LocalDateTime.now();
+                deliverOrder.setDateTime(dateTime);
+
+
+                deliverOrderController.addDeliverOrderByEmail(deliverOrder, new OnAddDeliverOrderListener() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(CustomerCreateOrderActivity3.this, "Tạo đơn hàng thành công!", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(String err) {
+                        Toast.makeText(CustomerCreateOrderActivity3.this, "Đã có lỗi xảy ra, tạo đơn hàng thất bại!", Toast.LENGTH_LONG).show();
+                    }
+                });
 
             }
         });
@@ -130,6 +156,8 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
         edt_ReceiverName = findViewById(R.id.edt_ReceiverName);
         edt_ReceiverNotes = findViewById(R.id.edt_ReceiverNotes);
         edt_ReceiverPhoneNumber = findViewById(R.id.edt_ReceiverPhoneNumber);
+        edtAddressDetail = findViewById(R.id.edtAddressDetail);
 
+        edt_amount_paid = findViewById(R.id.edt_amount_paid);
     }
 }
