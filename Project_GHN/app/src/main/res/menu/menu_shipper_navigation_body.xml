@@ -11,7 +11,7 @@
                     android:title="Đơn hàng mới"
                     android:icon="@drawable/list_order"/>
                 <item
-                    android:id="@+id/nav_list_acceipt_order"
+                    android:id="@+id/nav_list_accecpted_order"
                     android:title="Đơn đã nhận"
                     android:icon="@drawable/list_order"/>
             </menu>

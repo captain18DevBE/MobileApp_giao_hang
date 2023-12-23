@@ -57,6 +57,25 @@ public class ListOrderAdapter extends RecyclerView.Adapter<ListOrderAdapter.View
         holder.dateTime.setText(orderDTO.getDateTime().toString());
         holder.type.setText(orderDTO.getType());
         holder.phoneNumber.setText(orderDTO.getPhoneNumber());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(orderDTO);
+                }
+            }
+        });
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(OrderDTO orderDTO);
+    }
+
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override

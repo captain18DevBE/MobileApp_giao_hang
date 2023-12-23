@@ -21,6 +21,7 @@ import tdtu.edu.project_ghn.view.activity.ChangeCustomerPassActivity;
 import tdtu.edu.project_ghn.view.activity.ChosseAccountActivity;
 import tdtu.edu.project_ghn.view.activity.ListOrderActivity;
 import tdtu.edu.project_ghn.view.activity.ShipperInfoUpdate;
+import tdtu.edu.project_ghn.view.activity.ShipperListOrderActivity;
 import tdtu.edu.project_ghn.view.activity.ShipperOrderDetailActivity;
 import tdtu.edu.project_ghn.view.fragment.CreateOrderFragment;
 
@@ -77,6 +78,10 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.nav_list_current_order) {
             //Testing
             Intent intent = new Intent(ShipperMainActivity.this, ShipperOrderDetailActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_list_accecpted_order) {
+            //Testing
+            Intent intent = new Intent(ShipperMainActivity.this, ShipperListOrderActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_changePass) {
             //Shipper Pass Changing Activity is not created, tested first using customer's

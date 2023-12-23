@@ -2,11 +2,15 @@ package tdtu.edu.project_ghn.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import tdtu.edu.project_ghn.R;
@@ -15,6 +19,7 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
 
     TextView txtWaitForShipper, txtBeingShipped, txtFinishedShipping, txtIsPaid, txtFinishedDate;
     Button btnCancelOrder;
+    ImageView imgProduct;
     //start test update orderdetail UI corresponds to data.
     boolean waitForShipper = true, beingShipped = false, FinishedShipping = false, IsPaid = false;
 
@@ -51,6 +56,14 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
         txtIsPaid = findViewById(R.id.txtIsPaid);
         btnCancelOrder = findViewById(R.id.btnCancelOrder);
         txtFinishedDate = findViewById(R.id.txtFinishedDate);
+
+        //testing saving and loading image on local storage
+        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        String imagePath = sharedPreferences.getString("imgPath", "");
+
+        imgProduct = findViewById(R.id.imgProduct);
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        imgProduct.setImageBitmap(bitmap);
 
         updateOrderState();
     }

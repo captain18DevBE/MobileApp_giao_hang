@@ -16,6 +16,7 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -133,6 +134,12 @@ public class CameraXActivity extends AppCompatActivity {
                         intent.putExtra("imgPath", file.getPath());
                         setResult(RESULT_OK, intent);
                         finish();
+
+                        //testing saving and loading image on local storage
+                        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                        myEdit.putString("imgPath", file.getPath());
+                        myEdit.apply();
                     }
                 });
             }

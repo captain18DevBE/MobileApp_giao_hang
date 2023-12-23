@@ -9,15 +9,17 @@ public class OrderDTO {
     private LocalDateTime dateTime;
     private String type;
     private String phoneNumber;
+    private String state;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String address, LocalDateTime dateTime, String type, String phoneNumber) {
+    public OrderDTO(String address, LocalDateTime dateTime, String type, String phoneNumber, String state) {
         this.address = address;
         this.dateTime = dateTime;
         this.type = type;
         this.phoneNumber = phoneNumber;
+        this.state = state;
     }
 
     public String getAddress() {
@@ -51,4 +53,5 @@ public class OrderDTO {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    public String getState() { return state; }
 }
