@@ -61,6 +61,7 @@ public class ShipperListOrderActivity extends AppCompatActivity {
             @Override
             public void onItemClick(OrderDTO orderDTO) {
                 Intent intent = new Intent(ShipperListOrderActivity.this, ShipperOrderDetailActivity.class);
+                intent.putExtra("state", orderDTO.getState());
                 startActivity(intent);
             }
         });

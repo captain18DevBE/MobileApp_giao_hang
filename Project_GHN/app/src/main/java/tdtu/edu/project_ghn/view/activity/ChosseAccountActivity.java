@@ -25,7 +25,7 @@ public class ChosseAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ChosseAccountActivity.this, ShipperLoginActivity.class);
                 startActivity(intent);
-                finishAfterTransition();
+
             }
         });
 

@@ -20,7 +20,7 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
     Button btnUpdateOrderState;
     ImageView imgProduct;
     //start test update orderdetail UI corresponds to data.
-    boolean waitForShipper = false, beingShipped = false, FinishedShipping = false, IsPaid = true;
+    boolean waitForShipper = false, beingShipped = false, FinishedShipping = false, IsPaid = false;
 
     private void updateOrderState() {
         if(waitForShipper) {
@@ -28,6 +28,8 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
             btnUpdateOrderState.setText("Đã nhận hàng");
         }
         if(beingShipped) {
+            waitForShipper = true;
+            txtWaitForShipper.setTextColor(Color.GREEN);
             txtBeingShipped.setTextColor(Color.GREEN);
             if (IsPaid) btnUpdateOrderState.setText("Hoàn thành vận chuyển");
             else {
@@ -35,6 +37,8 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
             }
         }
         if(FinishedShipping) {
+            waitForShipper = true; txtWaitForShipper.setTextColor(Color.GREEN);
+            beingShipped = true; txtBeingShipped.setTextColor(Color.GREEN);
             if (!IsPaid) {
                 IsPaid = true;
             }
@@ -70,6 +74,12 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         imgProduct.setImageBitmap(bitmap);
 
+        String state = getIntent().getStringExtra("state");
+        switch (state) {
+            case "delivering": beingShipped = true; break;
+            case "delivered": FinishedShipping = true; break;
+            case "waiting": waitForShipper = true; break;
+        }
         updateOrderState();
 
         btnUpdateOrderState.setOnClickListener(new View.OnClickListener() {
