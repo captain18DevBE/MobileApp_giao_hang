@@ -1,6 +1,7 @@
 package tdtu.edu.project_ghn.view.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -8,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,10 +85,18 @@ public class CustomerLoginActivity extends AppCompatActivity {
 
 
     private void buildMenuAction(Toolbar toolbar) {
-        toolbar.setTitle("ĐĂNG NHẬP");
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
-        toolbar.inflateMenu(R.menu.menu_login);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Đăng nhập");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initFindView() {

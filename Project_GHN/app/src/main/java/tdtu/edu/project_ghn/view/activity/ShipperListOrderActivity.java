@@ -1,6 +1,7 @@
 package tdtu.edu.project_ghn.view.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,14 +27,15 @@ public class ShipperListOrderActivity extends AppCompatActivity {
     private ListOrderAdapter orderAdapter;
     private List<OrderDTO> allOrders = new ArrayList<>();
     private List<OrderDTO> filteredOrders = new ArrayList<>();
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_order);
 
-        Toolbar toolbar = findViewById(R.id.toolbarListOrder);
-        setSupportActionBar(toolbar);
+        toolbar = findViewById(R.id.toolbarListOrder);
+        buildMenuAction(toolbar);
 
         rcvListOrder = findViewById(R.id.rcv_listOrder);
         rcvListOrder.setLayoutManager(new LinearLayoutManager(this));
@@ -53,7 +55,11 @@ public class ShipperListOrderActivity extends AppCompatActivity {
         OrderDTO order3 = new OrderDTO("Dak Lak", dateTime3, "Đồ ăn", "9837291033", "delivered");
         allOrders.add(order3);
 
-        filteredOrders.addAll(allOrders);
+        for (OrderDTO order : allOrders) {
+            if ("delivering".equals(order.getState())) {
+                filteredOrders.add(order);
+            }
+        }
         orderAdapter = new ListOrderAdapter(this, filteredOrders);
         rcvListOrder.setAdapter(orderAdapter);
 
@@ -75,6 +81,7 @@ public class ShipperListOrderActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        ActionBar actionBar = getSupportActionBar();
         filteredOrders.clear();
         if (item.getItemId() == R.id.menu_inProgressOrder) {
             for (OrderDTO order : allOrders) {
@@ -82,21 +89,32 @@ public class ShipperListOrderActivity extends AppCompatActivity {
                     filteredOrders.add(order);
                 }
             }
+            if (actionBar != null) {
+                actionBar.setTitle("Đơn đang nhận");
+            }
         } else if (item.getItemId() == R.id.menu_completedOrder) {
             for (OrderDTO order : allOrders) {
                 if ("delivered".equals(order.getState())) {
                     filteredOrders.add(order);
                 }
             }
-        } else if (item.getItemId() == R.id.menu_allOrder) {
-            filteredOrders.addAll(allOrders);
+            if (actionBar != null) {
+                actionBar.setTitle("Đơn đã hoàn thành");
+            }
+        }
+        if (item.getItemId() == android.R.id.home) {
+            finish();
         }
 
         orderAdapter.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
     }
 
-
-
+    private void buildMenuAction(androidx.appcompat.widget.Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Đơn đang nhận");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
 }

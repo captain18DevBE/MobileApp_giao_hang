@@ -1,12 +1,16 @@
 package tdtu.edu.project_ghn.view.activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +22,7 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
 
     TextView txtWaitForShipper, txtBeingShipped, txtFinishedShipping, txtIsPaid, txtFinishedDate;
     Button btnUpdateOrderState;
+    Toolbar toolbar;
     ImageView imgProduct;
     //start test update orderdetail UI corresponds to data.
     boolean waitForShipper = false, beingShipped = false, FinishedShipping = false, IsPaid = false;
@@ -65,6 +70,9 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
         txtIsPaid = findViewById(R.id.txtIsPaid);
         btnUpdateOrderState = findViewById(R.id.btnUpdateOrderState);
         txtFinishedDate = findViewById(R.id.txtFinishedDate2);
+        toolbar = findViewById(R.id.toolbar4);
+
+        buildMenuAction(toolbar);
 
         //testing saving and loading image on local storage
         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
@@ -95,5 +103,20 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
                 updateOrderState();
             }
         });
+    }
+
+    private void buildMenuAction(androidx.appcompat.widget.Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Thông tin đơn hàng");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

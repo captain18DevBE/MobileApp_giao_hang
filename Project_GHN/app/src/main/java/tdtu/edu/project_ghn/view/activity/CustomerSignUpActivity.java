@@ -1,10 +1,13 @@
 package tdtu.edu.project_ghn.view.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +30,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
     TextView txtNotice;
     EditText edt_CustomerEmailSignup, edt_CustomerPassSignup, edt_CustomerPassConfirmSignup;
     Button btnCustomerSignup;
+    Toolbar toolbar;
 
     CustomerController customerController = new CustomerController();
     @Override
@@ -36,6 +40,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
 
         initUI();
         initListener();
+        buildMenuAction(toolbar);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -84,5 +89,21 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         edt_CustomerPassConfirmSignup = findViewById(R.id.edt_CustomerPassConfirmSignup);
         btnCustomerSignup = findViewById(R.id.btnCustomerSignup);
         txtNotice = findViewById(R.id.txtNotice);
+        toolbar = findViewById(R.id.toolbar);
+    }
+
+    private void buildMenuAction(androidx.appcompat.widget.Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Đăng ký");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

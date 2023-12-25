@@ -160,4 +160,5 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
 
         edt_amount_paid = findViewById(R.id.edt_amount_paid);
     }
+
 }
