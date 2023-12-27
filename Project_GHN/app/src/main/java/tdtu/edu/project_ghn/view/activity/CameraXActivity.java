@@ -133,13 +133,13 @@ public class CameraXActivity extends AppCompatActivity {
                         Toast.makeText(CameraXActivity.this, "Image saved at: " + file.getPath(), Toast.LENGTH_SHORT).show();
                         intent.putExtra("imgPath", file.getPath());
                         setResult(RESULT_OK, intent);
-                        finish();
 
                         //testing saving and loading image on local storage
                         SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
                         SharedPreferences.Editor myEdit = sharedPreferences.edit();
                         myEdit.putString("imgPath", file.getPath());
                         myEdit.apply();
+                        finish();
                     }
                 });
             }

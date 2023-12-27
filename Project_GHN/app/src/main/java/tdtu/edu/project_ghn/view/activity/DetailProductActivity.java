@@ -10,6 +10,8 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,7 +20,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
+
+import java.io.File;
 
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.entity.DeliverOrder;
@@ -31,6 +36,7 @@ public class DetailProductActivity extends AppCompatActivity {
     EditText editTextNumber;
 
     DeliverOrder deliverOrder;
+    ImageView imgProduct;
 
     RadioButton radio_Size_S, radio_Size_M, radio_Size_L, radio_Size_XL,
                 radio_Type_TP, radio_Type_TT, radio_Type_DT,
@@ -191,8 +197,12 @@ public class DetailProductActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1234 && resultCode == RESULT_OK) {
             String imgPath = data.getStringExtra("imgPath");
-//            /storage/emulated/0/Android/data/tdtu.edu.project_ghn/files/1703058173162.jpg
-            Log.d("image_path", imgPath);
+            if (!imgPath.isEmpty()) {
+                File file = new File(imgPath);
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+
+                imgProduct.setImageBitmap(bitmap);
+            }
         }
     }
 
@@ -215,5 +225,7 @@ public class DetailProductActivity extends AppCompatActivity {
         radio_insurance_advance = findViewById(R.id.radio_insurance_advance);
 
         editTextNumber = findViewById(R.id.editTextNumber);
+
+        imgProduct = findViewById(R.id.img_product);
     }
 }

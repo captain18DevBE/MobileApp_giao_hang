@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         updateUI();
 
-        navigationView.getMenu().findItem(R.id.nav_list_current_order).setChecked(true);
+        navigationView.getMenu().findItem(R.id.nav_create_order).setChecked(true);
+        replaceFragment(new CreateOrderFragment());
     }
 
     private void updateUI() {

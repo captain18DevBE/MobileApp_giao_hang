@@ -37,7 +37,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnNextToProfileCustomer"
+            android:id="@+id/btnUpdateImg"
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:translationY="-16dp"
