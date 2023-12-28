@@ -2,6 +2,7 @@ package tdtu.edu.project_ghn.controller;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,6 +15,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
 
 import tdtu.edu.project_ghn.controller.service.OnGetCustomerByEmail;
 import tdtu.edu.project_ghn.entity.Customer;
@@ -22,6 +28,8 @@ import tdtu.edu.project_ghn.view.activity.CustomerProfileActivity;
 public class CustomerController {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
 
     public boolean signUp(Customer customer) {
         boolean result = false;
@@ -58,12 +66,33 @@ public class CustomerController {
     //update detail information of customer
     public void updateCustomerInf(Customer resp) {
         DocumentReference documentReference = db.collection("customers").document(resp.getEmail());
+        String imgLocalPath = resp.getImgPath();
+        if (!imgLocalPath.isEmpty()) {
+            Uri imgFile = Uri.fromFile(new File(resp.getImgPath()));
+            StorageReference userImageProfile = storageRef.child("images/avatar_users/"+imgFile.getLastPathSegment());
+            resp.setImgPath(imgFile.getLastPathSegment());
+            UploadTask uploadTask = userImageProfile.putFile(imgFile);
+
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("firebase", "upload image is failed");
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d("firebase", "upload image is success");
+                }
+            });
+
+        }
 
         documentReference
                 .update(
                     "fullName", resp.getFullName(),
                         "address", resp.getAddress(),
-                        "phoneNumber", resp.getPhoneNumber()
+                        "phoneNumber", resp.getPhoneNumber(),
+                        "imgPath", resp.getImgPath()
                 ).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

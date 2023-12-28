@@ -10,17 +10,31 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 
 import tdtu.edu.project_ghn.controller.CustomerController;
 import tdtu.edu.project_ghn.entity.Customer;
@@ -37,7 +51,7 @@ import tdtu.edu.project_ghn.view.fragment.ListOrderFragment;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    FirebaseStorage storage = FirebaseStorage.getInstance();
     private static final int FRAGMENT_LIST_ORDER = 0;
     //test
     private int mCurrentFragment = FRAGMENT_LIST_ORDER;
@@ -49,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView txtNav_UserName, txtNav_UserEmail;
     Button btnNextToProfileCustomer;
     View header;
+    ImageView imgNavUserImg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +82,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void updateUI() {
         String email = user.getEmail();
         txtNav_UserEmail.setText(email);
+
+        Uri photoUri = user.getPhotoUrl();
+        if (photoUri != null) {
+            String absolutePath = photoUri.toString();
+            StorageReference storageRef = storage.getReference(absolutePath);
+            try {
+                File localFile = File.createTempFile("tempfile", ".jpeg");
+                storageRef.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                imgNavUserImg.setImageBitmap(bitmap);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                imgNavUserImg.setImageResource(R.drawable.avatar_user_default);
+                                Log.d("lay anh firebase", "da co loi xay ra lay avatar kh thanh cong");
+                            }
+                        });
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+
+
+
+//        if (photoUrl != null) {
+//            Glide.with(this)
+//                    .load("https://static-images.vnncdn.net/files/publish/2022/9/3/bien-vo-cuc-thai-binh-340.jpg")
+//                    .into(imgNavUserImg);
+//        } else {
+//            imgNavUserImg.setImageResource(R.drawable.avatar_user_default);
+//        }
+
     }
 
     private void buildNavigation() {
@@ -97,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         txtNav_UserEmail =  header.findViewById(R.id.txtNav_UserEmail);
         txtNav_UserName = header.findViewById(R.id.txtNav_UserName);
+        imgNavUserImg = header.findViewById(R.id.img_nav_UserImg);
 
         btnNextToProfileCustomer = header.findViewById(R.id.btnNextToProfileCustomer);
     }

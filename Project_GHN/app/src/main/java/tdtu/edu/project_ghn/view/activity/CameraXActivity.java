@@ -15,6 +15,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -37,6 +38,7 @@ public class CameraXActivity extends AppCompatActivity {
     ImageButton capture, toggleFlash, flipCamera;
     private PreviewView previewView;
     int cameraFacing = CameraSelector.LENS_FACING_BACK;
+    ProgressDialog dialog;
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
         public void onActivityResult(Boolean result) {
@@ -124,6 +126,12 @@ public class CameraXActivity extends AppCompatActivity {
         ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(file).build();
 
         Intent intent = getIntent();
+
+        dialog = new ProgressDialog(CameraXActivity.this);
+        dialog.setMessage("Đang lưu ảnh!");
+        dialog.setCancelable(false);
+        dialog.show();
+
         imageCapture.takePicture(outputFileOptions, Executors.newCachedThreadPool(), new ImageCapture.OnImageSavedCallback() {
             @Override
             public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
@@ -140,6 +148,7 @@ public class CameraXActivity extends AppCompatActivity {
                         myEdit.putString("imgPath", file.getPath());
                         myEdit.apply();
                         finish();
+                        dialog.dismiss();
                     }
                 });
             }

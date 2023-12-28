@@ -3,14 +3,32 @@ package tdtu.edu.project_ghn.entity;
 import java.io.Serializable;
 
 public class Customer implements Serializable {
-    public String email;
-    public String fullName;
-    public String address;
-    public String phoneNumber;
-    public String role;
-
+    private String email;
+    private String fullName;
+    private String address;
+    private String phoneNumber;
+    private String role;
+    private String imgPath;
     //List product
 
+    public Customer() {}
+
+    public Customer(String email, String fullName, String address, String phoneNumber, String role, String imgPath) {
+        this.email = email;
+        this.fullName = fullName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.imgPath = imgPath;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
 
     public String getRole() {
         return role;

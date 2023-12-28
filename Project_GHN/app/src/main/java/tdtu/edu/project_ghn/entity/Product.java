@@ -11,15 +11,7 @@ public class Product implements Serializable {
     private String productSize;
     private String productType;
 
-    public File getImgData() {
-        return imgData;
-    }
-
-    public void setImgData(File imgData) {
-        this.imgData = imgData;
-    }
-
-    private File imgData;
+    private String imgPath;
     private String typeOfInsurance;
 
     public Product() {
@@ -30,6 +22,14 @@ public class Product implements Serializable {
         this.productSize = productSize;
         this.productType = productType;
         this.typeOfInsurance = typeOfInsurance;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 
     public float getWeight() {

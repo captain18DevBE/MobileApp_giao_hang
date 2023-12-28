@@ -69,7 +69,7 @@ dependencies {
     implementation ("org.projectlombok:lombok:0.11.0")
     // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
-
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 
 //    // Google Map
 //    implementation("com.google.android.gms:play-services-maps:18.1.0")
@@ -80,4 +80,13 @@ dependencies {
     implementation ("androidx.camera:camera-camera2:1.2.2")
     implementation ("androidx.camera:camera-lifecycle:1.2.2")
     implementation ("androidx.camera:camera-view:1.2.2")
+
+    // Add the dependency for the Cloud Storage library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-storage")
+
+    // FirebaseUI Storage only
+    implementation ("com.firebaseui:firebase-ui-storage:7.2.0")
+
+
 }

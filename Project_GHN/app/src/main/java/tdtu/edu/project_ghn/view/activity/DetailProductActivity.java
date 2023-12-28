@@ -22,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -82,15 +83,20 @@ public class DetailProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                product.setWeight(Float.parseFloat(editTextNumber.getText().toString().trim()));
-                String address = getIntent().getStringExtra("address");
-                Intent intent = new Intent(DetailProductActivity.this, CustomerCreateOrderActivity3.class);
+                if (editTextNumber.getText() == null) {
+                    editTextNumber.setError("Nhập cân nặng!");
+                    Toast.makeText(DetailProductActivity.this, "Vui lòng nhập trong lượng gói hàng!", Toast.LENGTH_LONG).show();
+                } else {
+                    product.setWeight(Float.parseFloat(editTextNumber.getText().toString().trim()));
+                    String address = getIntent().getStringExtra("address");
+                    Intent intent = new Intent(DetailProductActivity.this, CustomerCreateOrderActivity3.class);
 
-                deliverOrder.setProduct(product);
-                intent.putExtra("deliverOrder", deliverOrder);
-                intent.putExtra("address", address);
+                    deliverOrder.setProduct(product);
+                    intent.putExtra("deliverOrder", deliverOrder);
+                    intent.putExtra("address", address);
+                    startActivity(intent);
+                }
 
-                startActivity(intent);
             }
         });
 
@@ -200,8 +206,8 @@ public class DetailProductActivity extends AppCompatActivity {
             if (!imgPath.isEmpty()) {
                 File file = new File(imgPath);
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-
                 imgProduct.setImageBitmap(bitmap);
+
             }
         }
     }
@@ -227,5 +233,6 @@ public class DetailProductActivity extends AppCompatActivity {
         editTextNumber = findViewById(R.id.editTextNumber);
 
         imgProduct = findViewById(R.id.img_product);
+
     }
 }
