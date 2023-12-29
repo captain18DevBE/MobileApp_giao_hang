@@ -27,10 +27,12 @@ import android.widget.Toast;
 import java.io.File;
 
 import tdtu.edu.project_ghn.R;
+import tdtu.edu.project_ghn.controller.ProductController;
 import tdtu.edu.project_ghn.entity.DeliverOrder;
 import tdtu.edu.project_ghn.entity.Product;
 
 public class DetailProductActivity extends AppCompatActivity {
+    ProductController productController = new ProductController();
 
     Button btnContinue, btnChose_imgProduct;
     Toolbar toolbar;
@@ -54,6 +56,10 @@ public class DetailProductActivity extends AppCompatActivity {
 
         //get object data
         deliverOrder = (DeliverOrder) getIntent().getSerializableExtra("deliverOrder");
+        product.setWeight(0);
+        product.setProductType("thoi trang");
+        product.setProductSize("S");
+        product.setTypeOfInsurance("default");
 
     }
 
@@ -82,8 +88,8 @@ public class DetailProductActivity extends AppCompatActivity {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (editTextNumber.getText() == null) {
+                String weight = editTextNumber.getText().toString().trim();
+                if (weight.isEmpty()) {
                     editTextNumber.setError("Nhập cân nặng!");
                     Toast.makeText(DetailProductActivity.this, "Vui lòng nhập trong lượng gói hàng!", Toast.LENGTH_LONG).show();
                 } else {
@@ -203,7 +209,7 @@ public class DetailProductActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1234 && resultCode == RESULT_OK) {
             String imgPath = data.getStringExtra("imgPath");
-            if (!imgPath.isEmpty()) {
+            if (imgPath != null) {
                 File file = new File(imgPath);
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                 imgProduct.setImageBitmap(bitmap);
@@ -233,6 +239,10 @@ public class DetailProductActivity extends AppCompatActivity {
         editTextNumber = findViewById(R.id.editTextNumber);
 
         imgProduct = findViewById(R.id.img_product);
+
+        radio_Size_S.setChecked(true);
+        radio_Type_TT.setChecked(true);
+        radio_insurance_default.setChecked(true);
 
     }
 }

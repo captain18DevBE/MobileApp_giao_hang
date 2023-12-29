@@ -37,6 +37,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import tdtu.edu.project_ghn.MainActivity;
 import tdtu.edu.project_ghn.R;
@@ -69,6 +70,9 @@ public class CreateOrderFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_create_order, container, false);
         initUI();
         initListener();
+
+        deliverOrder.setService("cheap");
+        deliverOrder.setTypeOfTransport("motorBike");
 
         customerController.getByEmail(user.getEmail(), new OnGetCustomerByEmail() {
             @Override
@@ -157,7 +161,8 @@ public class CreateOrderFragment extends Fragment {
         btnMotorbike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chosenTransport="bike";
+                chosenTransport="motorBike";
+                deliverOrder.setTypeOfTransport("motorBike");
                 updateTransportButtonAppearance();
                 dialog.dismiss();
             }
@@ -167,6 +172,7 @@ public class CreateOrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 chosenTransport="tricycle";
+                deliverOrder.setTypeOfTransport("tricycle");
                 updateTransportButtonAppearance();
                 dialog.dismiss();
             }
@@ -188,6 +194,7 @@ public class CreateOrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 chosenService = "cheap";
+                deliverOrder.setService("cheap");
                 updateServiceButtonAppearance();
                 new GeocodingTask().execute(txtShopAddress.getText().toString(), txtAddress.getText().toString());
                 dialog.dismiss();
@@ -199,6 +206,7 @@ public class CreateOrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 chosenService="fast";
+                deliverOrder.setService("fast");
                 updateServiceButtonAppearance();
                 new GeocodingTask().execute(txtShopAddress.getText().toString(), txtAddress.getText().toString());
                 dialog.dismiss();
@@ -218,7 +226,7 @@ public class CreateOrderFragment extends Fragment {
     }
 
     private void updateTransportButtonAppearance() {
-        if (chosenTransport.equals("bike")) {
+        if (chosenTransport.equals("motorBike")) {
             spaceChoseTransport.setIcon(getResources().getDrawable(R.drawable.fast_delivery));
             spaceChoseTransport.setText("Xe máy: 30.000 VND");
         } else if (chosenTransport.equals("tricycle")) {
@@ -255,10 +263,13 @@ public class CreateOrderFragment extends Fragment {
         protected void onPostExecute(Float distanceInMeters) {
             if (distanceInMeters != null) {
 
+                deliverOrder.setLengthOfRoad(distanceInMeters/1000);
+
                 float speed = 10 * 1000f / 3600f;
                 //Speed base on service
                 if (chosenService.equals("cheap")) {
                         speed = 10 * 1000f / 3600f;
+                        deliverOrder.setTotalPrice(calculateTotalPrice("cheap", deliverOrder.getTypeOfTransport(), deliverOrder.getLengthOfRoad()));
                 } else {
                         speed = 30 * 1000f / 3600f;
                 }
@@ -290,6 +301,40 @@ public class CreateOrderFragment extends Fragment {
                 }
             }
         }
+    }
+
+    private double calculateTotalPrice(String service, String tranSport, float lengthRoad) {
+        double result = 0.0;
+        if (tranSport.equals("motorBike")) {
+            if (service.equals("fast")) {
+                if (lengthRoad <= 2) {
+                    result += 16000;
+                } else {
+                    float tmpRoad = lengthRoad - 2;
+                    result = 16000 + tmpRoad*5.500;
+                }
+            } else {
+                if (lengthRoad <= 10) {
+                    result += 20000;
+                } else if (lengthRoad >10 && lengthRoad <= 15) {
+
+                }
+            }
+        } else if (tranSport.equals("tricycle")) {
+            if (lengthRoad <= 4) {
+                result += 165000;
+            } else if (lengthRoad >4 && lengthRoad <= 10){
+                result = 165000 + (lengthRoad-4)*20000;
+            } else if (lengthRoad > 10 && lengthRoad <= 15) {
+                result = 165000 + 6*20000 + 5*14500;
+            } else if (lengthRoad > 15 && lengthRoad <= 40) {
+                result = 165000 + 6*20000 + 5*14500 + (lengthRoad - 15)*14000;
+            } else {
+                result = 165000 + 6*20000 + 5*14500 + 25*14000 + (lengthRoad - 40)*8000;
+            }
+        }
+
+        return result;
     }
 
     private void initUI() {

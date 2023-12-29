@@ -12,7 +12,8 @@ public class DeliverOrder implements Serializable {
     private String service;
     private String typeOfTransport;
     private Product product;
-
+    private float lengthOfRoad;
+    private double totalPrice = 0.0;
     public DeliverOrder() {
     }
 
@@ -24,6 +25,22 @@ public class DeliverOrder implements Serializable {
         this.service = service;
         this.typeOfTransport = typeOfTransport;
         this.product = product;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public float getLengthOfRoad() {
+        return lengthOfRoad;
+    }
+
+    public void setLengthOfRoad(float lengthOfRoad) {
+        this.lengthOfRoad = lengthOfRoad;
     }
 
     public Customer getCustomer() {
