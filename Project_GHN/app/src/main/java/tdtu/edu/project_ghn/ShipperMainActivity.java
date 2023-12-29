@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +41,7 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
     private NavigationView navigationView;
     Toolbar toolbar;
     private RecyclerView rcvListOrder;
+    ProgressBar progressBar;
     private ListOrderAdapter orderAdapter;
     private List<OrderDTO> allOrders = new ArrayList<>();
 
@@ -74,6 +77,7 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
         orderAdapter.setOnItemClickListener(new ListOrderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(OrderDTO orderDTO) {
+                progressBar.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(ShipperMainActivity.this, ShipperOrderDetailActivity.class);
                 intent.putExtra("state", orderDTO.getState());
                 startActivity(intent);
@@ -98,6 +102,7 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_viewShipperMainActivity);
         rcvListOrder = findViewById(R.id.listWaitingOrders);
+        progressBar = findViewById(R.id.progressBar);
     }
 
     @Override
@@ -128,6 +133,12 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
     }
 }
 

@@ -7,12 +7,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -31,6 +33,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
     EditText edtUserName, edtPassWord;
     TextView tvAlertLogin;
     Toolbar toolbar;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
         btnCustomerSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(CustomerLoginActivity.this, CustomerSignUpActivity.class);
                 startActivity(intent);
                 finish();
@@ -71,12 +75,17 @@ public class CustomerLoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    tvAlertLogin.setTextColor(Color.GREEN);
+                    tvAlertLogin.setText("Đăng nhập thành công");
+                    progressBar.setVisibility(View.VISIBLE);
+
                     FirebaseUser user = mAuth.getCurrentUser();
 //                    updateUI()
                     Intent intent = new Intent(CustomerLoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finishAffinity();
                 } else {
+                    tvAlertLogin.setTextColor(Color.RED);
                     tvAlertLogin.setText("Sai tên đăng nhập hoặc mật khẩu!");
                 }
             }
@@ -106,6 +115,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
         edtUserName = findViewById(R.id.edtShopOwnerName);
         edtPassWord = findViewById(R.id.edtShopPhone1);
         tvAlertLogin = findViewById(R.id.tvAlertLogin);
+        progressBar = findViewById(R.id.progressBar);
     }
 
     @Override

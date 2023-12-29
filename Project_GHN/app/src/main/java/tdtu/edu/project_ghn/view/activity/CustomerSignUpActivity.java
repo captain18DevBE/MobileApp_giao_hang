@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +33,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
     EditText edt_CustomerEmailSignup, edt_CustomerPassSignup, edt_CustomerPassConfirmSignup;
     Button btnCustomerSignup;
     Toolbar toolbar;
+    ProgressBar progressBar;
 
     CustomerController customerController = new CustomerController();
     @Override
@@ -41,6 +44,8 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         initUI();
         initListener();
         buildMenuAction(toolbar);
+
+        txtNotice.setVisibility(View.INVISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -54,8 +59,19 @@ public class CustomerSignUpActivity extends AppCompatActivity {
                 String email = edt_CustomerEmailSignup.getText().toString();
                 String password = edt_CustomerPassSignup.getText().toString();
                 String confirmPass = edt_CustomerPassConfirmSignup.getText().toString();
-                if (email.isEmpty() || !password.equals(confirmPass)) {
-                    txtNotice.setText("Vui lòng nhập đúng thông tin!");
+
+                if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    txtNotice.setVisibility(View.VISIBLE);
+                    txtNotice.setTextColor(Color.RED);
+                    txtNotice.setText("Xin hãy nhập đúng email!");
+                } else if (password.length() <= 5) {
+                    txtNotice.setVisibility(View.VISIBLE);
+                    txtNotice.setTextColor(Color.RED);
+                    txtNotice.setText("Độ dài mật khẩu phải lớn hơn 5!");
+                } else if (!password.equals(confirmPass)) {
+                    txtNotice.setVisibility(View.VISIBLE);
+                    txtNotice.setTextColor(Color.RED);
+                    txtNotice.setText("Xác nhận mật khẩu phải giống nhau!");
                 } else {
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(CustomerSignUpActivity.this, new OnCompleteListener<AuthResult>() {
@@ -64,6 +80,9 @@ public class CustomerSignUpActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         FirebaseUser user = mAuth.getCurrentUser();
 
+                                        progressBar.setVisibility(View.VISIBLE);
+                                        txtNotice.setVisibility(View.VISIBLE);
+                                        txtNotice.setTextColor(Color.GREEN);
                                         txtNotice.setText("Đăng ký tài khoản thành công!");
                                         Customer newCustomer = new Customer();
                                         newCustomer.setEmail(user.getEmail());
@@ -72,13 +91,14 @@ public class CustomerSignUpActivity extends AppCompatActivity {
                                         Intent intent = new Intent(CustomerSignUpActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         finishAffinity();
-//                                      updateUI(user);
                                     } else {
-                                        txtNotice.setText("Đăng ksy tài khoản thất bại!");
+                                        txtNotice.setVisibility(View.VISIBLE);
+                                        txtNotice.setTextColor(Color.RED);
+                                        txtNotice.setText("Đăng ký tài khoản thất bại!");
                                     }
                                 }
                             });
-                    }
+                }
             }
         });
     }
@@ -90,6 +110,7 @@ public class CustomerSignUpActivity extends AppCompatActivity {
         btnCustomerSignup = findViewById(R.id.btnCustomerSignup);
         txtNotice = findViewById(R.id.txtNotice);
         toolbar = findViewById(R.id.toolbar);
+        progressBar = findViewById(R.id.progressBar);
     }
 
     private void buildMenuAction(androidx.appcompat.widget.Toolbar toolbar) {
