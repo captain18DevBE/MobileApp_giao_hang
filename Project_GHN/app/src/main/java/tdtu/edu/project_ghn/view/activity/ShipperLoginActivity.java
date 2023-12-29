@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,20 +25,24 @@ public class ShipperLoginActivity extends AppCompatActivity {
 
     Button btnLoginShipper;
     Toolbar toolbar;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipper_login);
 
         btnLoginShipper = findViewById(R.id.btnLoginShipper);
+        progressBar = findViewById(R.id.progressBar);
 
         toolbar = findViewById(R.id.toolbar);
         buildMenuAction(toolbar);
         btnLoginShipper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(ShipperLoginActivity.this, ShipperMainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

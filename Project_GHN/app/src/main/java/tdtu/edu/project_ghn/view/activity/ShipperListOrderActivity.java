@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -27,6 +30,8 @@ public class ShipperListOrderActivity extends AppCompatActivity {
     private ListOrderAdapter orderAdapter;
     private List<OrderDTO> allOrders = new ArrayList<>();
     private List<OrderDTO> filteredOrders = new ArrayList<>();
+    ProgressDialog progressDialog;
+    ProgressBar progressBar;
     Toolbar toolbar;
 
     @Override
@@ -35,7 +40,11 @@ public class ShipperListOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_order);
 
         toolbar = findViewById(R.id.toolbarListOrder);
+        progressBar = findViewById(R.id.progressBar);
         buildMenuAction(toolbar);
+        progressDialog = new ProgressDialog(ShipperListOrderActivity.this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
 
         rcvListOrder = findViewById(R.id.rcv_listOrder);
         rcvListOrder.setLayoutManager(new LinearLayoutManager(this));
@@ -66,6 +75,7 @@ public class ShipperListOrderActivity extends AppCompatActivity {
         orderAdapter.setOnItemClickListener(new ListOrderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(OrderDTO orderDTO) {
+                progressBar.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(ShipperListOrderActivity.this, ShipperOrderDetailActivity.class);
                 intent.putExtra("state", orderDTO.getState());
                 startActivity(intent);
@@ -83,7 +93,9 @@ public class ShipperListOrderActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         ActionBar actionBar = getSupportActionBar();
         filteredOrders.clear();
+
         if (item.getItemId() == R.id.menu_inProgressOrder) {
+            progressDialog.show();
             for (OrderDTO order : allOrders) {
                 if ("delivering".equals(order.getState())) {
                     filteredOrders.add(order);
@@ -93,6 +105,7 @@ public class ShipperListOrderActivity extends AppCompatActivity {
                 actionBar.setTitle("Đơn đang nhận");
             }
         } else if (item.getItemId() == R.id.menu_completedOrder) {
+            progressDialog.show();
             for (OrderDTO order : allOrders) {
                 if ("delivered".equals(order.getState())) {
                     filteredOrders.add(order);
@@ -107,6 +120,8 @@ public class ShipperListOrderActivity extends AppCompatActivity {
         }
 
         orderAdapter.notifyDataSetChanged();
+        progressDialog.dismiss();
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -115,6 +130,12 @@ public class ShipperListOrderActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Đơn đang nhận");
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
     }
 
 }

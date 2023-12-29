@@ -95,6 +95,8 @@ public class ChangeCustomerPassActivity extends AppCompatActivity {
             edtConfirmNewPassword.setError("Xác nhận mật khẩu phải giống nhau!");
         } else {
             updatePassword(currentPassword, newPassword);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setCancelable(false);
             progressDialog.show();
         }
 
