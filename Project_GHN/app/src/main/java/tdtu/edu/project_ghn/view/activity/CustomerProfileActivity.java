@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -25,6 +26,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,7 @@ import java.io.IOException;
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.controller.CustomerController;
 import tdtu.edu.project_ghn.controller.service.OnGetCustomerByEmail;
+import tdtu.edu.project_ghn.controller.service.OnUpdateCustomerInfoListener;
 import tdtu.edu.project_ghn.entity.Customer;
 
 
@@ -60,6 +63,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
     String imgPath;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
+//    ProgressDialog dialog = new ProgressDialog(CustomerProfileActivity.this);
 
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
@@ -108,12 +112,6 @@ public class CustomerProfileActivity extends AppCompatActivity {
             }
         });
 
-        btnUpdateCustomerInf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     private void showOptionTakePhoto() {
@@ -262,17 +260,31 @@ public class CustomerProfileActivity extends AppCompatActivity {
     }
 
     private void updateCustomerInf() {
+
         btnUpdateCustomerInf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                dialog.show();
                 Customer customer = new Customer();
                 customer.setEmail(user.getEmail());
                 customer.setFullName(edt_CustomerFullNameUpdate.getText().toString().trim());
                 customer.setAddress(edt_CustomerAddressUpdate.getText().toString().trim());
                 customer.setPhoneNumber(edt_CustomerPhoneNumberUpdate.getText().toString().trim());
                 customer.setImgPath(imgPath);
-                customerController.updateCustomerInf(customer);
-                finish();
+
+                customerController.updateCustomerInf(customer, new OnUpdateCustomerInfoListener() {
+                    @Override
+                    public void onSuccess() {
+//                        dialog.dismiss();
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(String err) {
+//                        dialog.dismiss();
+                        Toast.makeText(CustomerProfileActivity.this, "Cập nhật thông tin thất bại!", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
     }

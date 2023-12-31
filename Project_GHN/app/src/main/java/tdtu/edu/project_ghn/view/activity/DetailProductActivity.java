@@ -22,9 +22,12 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.controller.ProductController;
@@ -37,10 +40,10 @@ public class DetailProductActivity extends AppCompatActivity {
     Button btnContinue, btnChose_imgProduct;
     Toolbar toolbar;
     EditText editTextNumber;
-
+    TextView txtTotalPrice;
     DeliverOrder deliverOrder;
     ImageView imgProduct;
-
+    Double insurancePrice = 0.0;
     RadioButton radio_Size_S, radio_Size_M, radio_Size_L, radio_Size_XL,
                 radio_Type_TP, radio_Type_TT, radio_Type_DT,
                 radio_insurance_default, radio_insurance_normal, radio_insurance_advance;
@@ -61,6 +64,11 @@ public class DetailProductActivity extends AppCompatActivity {
         product.setProductSize("S");
         product.setTypeOfInsurance("default");
 
+        //set enable ui
+        double totalPrice = deliverOrder.getTotalPrice();
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+        txtTotalPrice.setText("Cước phí vận chuyển: "+Double.parseDouble(decimalFormat.format(totalPrice)));
     }
 
     private void buildMenu() {
@@ -93,10 +101,12 @@ public class DetailProductActivity extends AppCompatActivity {
                     editTextNumber.setError("Nhập cân nặng!");
                     Toast.makeText(DetailProductActivity.this, "Vui lòng nhập trong lượng gói hàng!", Toast.LENGTH_LONG).show();
                 } else {
+
                     product.setWeight(Float.parseFloat(editTextNumber.getText().toString().trim()));
                     String address = getIntent().getStringExtra("address");
                     Intent intent = new Intent(DetailProductActivity.this, CustomerCreateOrderActivity3.class);
 
+                    deliverOrder.setTotalPrice(deliverOrder.getTotalPrice()+insurancePrice);
                     deliverOrder.setProduct(product);
                     intent.putExtra("deliverOrder", deliverOrder);
                     intent.putExtra("address", address);
@@ -181,6 +191,13 @@ public class DetailProductActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     product.setTypeOfInsurance("normal");
+                    insurancePrice = 4000.0;
+
+                    double totalPrice = deliverOrder.getTotalPrice()+insurancePrice;
+                    DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                    decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+
+                    txtTotalPrice.setText("Cước phí vận chuyển: "+Double.parseDouble(decimalFormat.format(totalPrice)));
                 }
             }
         });
@@ -190,6 +207,13 @@ public class DetailProductActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     product.setTypeOfInsurance("default");
+                    insurancePrice = 0.0;
+
+                    double totalPrice = deliverOrder.getTotalPrice()+insurancePrice;
+                    DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                    decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+
+                    txtTotalPrice.setText("Cước phí vận chuyển: "+Double.parseDouble(decimalFormat.format(totalPrice)));
                 }
             }
         });
@@ -199,10 +223,17 @@ public class DetailProductActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     product.setTypeOfInsurance("advance");
+                    insurancePrice = 10000.0;
+                    double totalPrice = deliverOrder.getTotalPrice()+insurancePrice;
+                    DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                    decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+
+                    txtTotalPrice.setText("Cước phí vận chuyển: "+Double.parseDouble(decimalFormat.format(totalPrice)));
                 }
             }
         });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -243,6 +274,11 @@ public class DetailProductActivity extends AppCompatActivity {
         radio_Size_S.setChecked(true);
         radio_Type_TT.setChecked(true);
         radio_insurance_default.setChecked(true);
+
+        txtTotalPrice = findViewById(R.id.txtTotalPrice);
+
+
+
 
     }
 }

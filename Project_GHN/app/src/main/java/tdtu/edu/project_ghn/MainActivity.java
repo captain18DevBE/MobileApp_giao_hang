@@ -81,7 +81,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void updateUI() {
         String email = user.getEmail();
+        String fullName = user.getDisplayName();
         txtNav_UserEmail.setText(email);
+        if (!fullName.isEmpty()) {
+            txtNav_UserName.setText(fullName);
+        } else {
+            txtNav_UserName.setText("Chưa cập nhật!");
+        }
 
         Uri photoUri = user.getPhotoUrl();
         if (photoUri != null) {

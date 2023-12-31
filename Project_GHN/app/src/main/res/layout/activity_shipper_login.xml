@@ -65,7 +65,7 @@
             style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mã nhân viên"
+            android:hint="Tài khoản email"
             app:boxStrokeColor="#48AA38"
             app:helperTextTextColor="#48AA38"
             app:hintTextColor="#48AA38">

@@ -264,7 +264,6 @@ public class CreateOrderFragment extends Fragment {
             if (distanceInMeters != null) {
 
                 deliverOrder.setLengthOfRoad(distanceInMeters/1000);
-
                 float speed = 10 * 1000f / 3600f;
                 //Speed base on service
                 if (chosenService.equals("cheap")) {
@@ -272,6 +271,7 @@ public class CreateOrderFragment extends Fragment {
                         deliverOrder.setTotalPrice(calculateTotalPrice("cheap", deliverOrder.getTypeOfTransport(), deliverOrder.getLengthOfRoad()));
                 } else {
                         speed = 30 * 1000f / 3600f;
+                        deliverOrder.setTotalPrice(calculateTotalPrice("fast", deliverOrder.getTypeOfTransport(), deliverOrder.getLengthOfRoad()));
                 }
 
 
@@ -308,21 +308,22 @@ public class CreateOrderFragment extends Fragment {
         if (tranSport.equals("motorBike")) {
             if (service.equals("fast")) {
                 if (lengthRoad <= 2) {
-                    result += 16000;
+                    result = 16000;
                 } else {
                     float tmpRoad = lengthRoad - 2;
                     result = 16000 + tmpRoad*5.500;
                 }
             } else {
                 if (lengthRoad <= 10) {
-                    result += 20000;
+                    result = 20000;
                 } else if (lengthRoad >10 && lengthRoad <= 15) {
-
+                    result = 25000;
                 }
             }
+
         } else if (tranSport.equals("tricycle")) {
             if (lengthRoad <= 4) {
-                result += 165000;
+                result = 165000;
             } else if (lengthRoad >4 && lengthRoad <= 10){
                 result = 165000 + (lengthRoad-4)*20000;
             } else if (lengthRoad > 10 && lengthRoad <= 15) {

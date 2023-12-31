@@ -7,14 +7,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.window.OnBackInvokedDispatcher;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import tdtu.edu.project_ghn.R;
+import tdtu.edu.project_ghn.controller.DeliverOrderController;
+import tdtu.edu.project_ghn.controller.service.OnGetAllDocumentDeliverOrderListener;
+import tdtu.edu.project_ghn.entity.DeliverOrder;
 import tdtu.edu.project_ghn.model.OrderDTO;
 import tdtu.edu.project_ghn.view.adapter.ListOrderAdapter;
 
@@ -24,6 +29,7 @@ public class ListOrderActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     private ListOrderAdapter listOrderAdapter;
     private List<OrderDTO> orderDTOList = new ArrayList<>();
+    private DeliverOrderController deliverOrderController = new DeliverOrderController();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +38,19 @@ public class ListOrderActivity extends AppCompatActivity {
         initUI();
         setSupportActionBar(toolbar);
         initRCV();
+
+        deliverOrderController.getAllDocumentDeliverOrder(new OnGetAllDocumentDeliverOrderListener() {
+            @Override
+            public void onSuccess(Map<String, Map<String, DeliverOrder>> collectionOrders) {
+                Log.d("lay danh sach du lieu", "abcssad");
+            }
+
+            @Override
+            public void onFailure(String err) {
+
+            }
+        });
+
     }
 
     private void initRCV() {
