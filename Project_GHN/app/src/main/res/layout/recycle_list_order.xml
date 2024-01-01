@@ -97,14 +97,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Người nhận:" />
+                    android:text="SĐT Người nhận:" />
 
                 <TextView
                     android:id="@+id/txtPhoneListOrder"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:text="Người nhận"
+                    android:text="SĐT Người nhận"
                     android:theme="@style/recycle_view_item" />
             </LinearLayout>
 
