@@ -53,15 +53,15 @@ public class ShipperListOrderActivity extends AppCompatActivity {
         //Testing data:
 
         LocalDateTime dateTime1 = LocalDateTime.now();
-        OrderDTO order1 = new OrderDTO("TP.HCM", dateTime1, "Thời trang", "0343373617", "delivering");
+        OrderDTO order1 = new OrderDTO("TP.HCM", "2023", "Thời trang", "0343373617", "delivering");
         allOrders.add(order1);
 
         LocalDateTime dateTime2 = dateTime1.plusDays(1);
-        OrderDTO order2 = new OrderDTO("Hanoi", dateTime2, "Điện tử", "0194891030", "delivering");
+        OrderDTO order2 = new OrderDTO("Hanoi", "2023", "Điện tử", "0194891030", "delivering");
         allOrders.add(order2);
 
         LocalDateTime dateTime3 = dateTime2.plusDays(1);
-        OrderDTO order3 = new OrderDTO("Dak Lak", dateTime3, "Đồ ăn", "9837291033", "delivered");
+        OrderDTO order3 = new OrderDTO("Dak Lak", "2023", "Đồ ăn", "9837291033", "delivered");
         allOrders.add(order3);
 
         for (OrderDTO order : allOrders) {

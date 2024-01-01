@@ -89,5 +89,7 @@ dependencies {
     // FirebaseUI Storage only
     implementation ("com.firebaseui:firebase-ui-storage:7.2.0")
 
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation("com.google.code.gson:gson:2.10.1")
 
 }

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class OrderDTO {
     private String address;
 
-    private LocalDateTime dateTime;
+    private String dateTime;
     private String type;
     private String phoneNumber;
     private String state;
@@ -14,7 +14,7 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(String address, LocalDateTime dateTime, String type, String phoneNumber, String state) {
+    public OrderDTO(String address, String dateTime, String type, String phoneNumber, String state) {
         this.address = address;
         this.dateTime = dateTime;
         this.type = type;
@@ -26,7 +26,7 @@ public class OrderDTO {
         return address;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
@@ -42,7 +42,7 @@ public class OrderDTO {
         this.address = address;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 

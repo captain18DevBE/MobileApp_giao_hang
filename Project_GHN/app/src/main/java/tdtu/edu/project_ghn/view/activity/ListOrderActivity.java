@@ -6,19 +6,24 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.window.OnBackInvokedDispatcher;
+
+import com.google.gson.Gson;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import tdtu.edu.project_ghn.MainActivity;
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.controller.DeliverOrderController;
 import tdtu.edu.project_ghn.controller.service.OnGetAllDocumentDeliverOrderListener;
+import tdtu.edu.project_ghn.controller.service.OnGetDeliverOrderByEmailUserListener;
 import tdtu.edu.project_ghn.entity.DeliverOrder;
 import tdtu.edu.project_ghn.model.OrderDTO;
 import tdtu.edu.project_ghn.view.adapter.ListOrderAdapter;
@@ -30,6 +35,9 @@ public class ListOrderActivity extends AppCompatActivity {
     private ListOrderAdapter listOrderAdapter;
     private List<OrderDTO> orderDTOList = new ArrayList<>();
     private DeliverOrderController deliverOrderController = new DeliverOrderController();
+    private Map<String, Object> orderMap;
+    Gson gson = new Gson();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,40 +45,70 @@ public class ListOrderActivity extends AppCompatActivity {
 
         initUI();
         setSupportActionBar(toolbar);
-        initRCV();
 
-        deliverOrderController.getAllDocumentDeliverOrder(new OnGetAllDocumentDeliverOrderListener() {
+
+
+        //test get api
+//        deliverOrderController.getAllDocumentDeliverOrder(new OnGetAllDocumentDeliverOrderListener() {
+//            @Override
+//            public void onSuccess(Map<String, Map<String, DeliverOrder>> collectionOrders) {
+//                Log.d("lay danh sach du lieu", "abcssad");
+//            }
+//
+//            @Override
+//            public void onFailure(String err) {
+//
+//            }
+//        });
+
+        deliverOrderController.getListDeliverOrdersByEmailUser(new OnGetDeliverOrderByEmailUserListener() {
             @Override
-            public void onSuccess(Map<String, Map<String, DeliverOrder>> collectionOrders) {
-                Log.d("lay danh sach du lieu", "abcssad");
+            public void onSuccess(Map<String, Object> values) {
+                orderMap = values;
+                for (Map.Entry<String, Object> entry : values.entrySet()) {
+                    OrderDTO orderDTO = new OrderDTO();
+                    String key = entry.getKey();
+                    Map<String, Object> value = (Map<String, Object>) entry.getValue();
+//                    DeliverOrder value = (DeliverOrder) entry.getValue();
+                    String address = (String) value.get("receiverAddress");
+                    Map<String, Object> dateTime = (Map<String, Object>) value.get("dateTime");
+
+                    Long year = (Long) dateTime.get("year");
+                    Long month = (Long) dateTime.get("monthValue");
+                    Long dayOfMonth = (Long) dateTime.get("dayOfMonth");
+                    Long timeOfDay = (Long) dateTime.get("hour");
+                    Long minute = (Long) dateTime.get("minute");
+                    Long second = (Long) dateTime.get("second");
+
+                    String strDateTime = ""+year+"-"+month+"-"+dayOfMonth+"  "+timeOfDay+":"+minute+":"+second;
+
+                    Map<String, Object> productMap = (Map<String, Object>) value.get("product");
+                    String productType = (String) productMap.get("productType");
+
+                    Map<String, Object> receiverMap = (Map<String, Object>) value.get("receiver");
+                    String phoneNumber = (String) receiverMap.get("phoneNumber");
+
+                    orderDTO.setPhoneNumber(phoneNumber);
+                    orderDTO.setAddress(address);
+                    orderDTO.setDateTime(strDateTime);
+                    orderDTO.setType(productType);
+
+
+                    orderDTOList.add(orderDTO);
+//                    Log.d("lay danh sach du lieu"+key, orderDTO.getDateTime());
+                    initRCV();
+                }
             }
 
             @Override
             public void onFailure(String err) {
-
+                Log.d("lay danh sach du lieu", "that bai");
             }
         });
 
     }
 
     private void initRCV() {
-        //test
-        OrderDTO tmp = new OrderDTO();
-        tmp.setAddress("TP.HCM");
-        tmp.setPhoneNumber("0343373617");
-        tmp.setType("Thời trang");
-        LocalDateTime localDateTime = LocalDateTime.now();
-        tmp.setDateTime(localDateTime);
-
-        OrderDTO tmp2 = new OrderDTO();
-        tmp2.setAddress("TP.HCM");
-        tmp2.setPhoneNumber("0343373617");
-        tmp2.setType("Thời trang");
-        LocalDateTime localDateTime2 = LocalDateTime.now();
-        tmp2.setDateTime(localDateTime2);
-        orderDTOList.add(tmp);
-        orderDTOList.add(tmp2);
-        //test
 
         listOrderAdapter = new ListOrderAdapter(this, orderDTOList);
         recyclerView.setAdapter(listOrderAdapter);
@@ -92,9 +130,17 @@ public class ListOrderActivity extends AppCompatActivity {
     @NonNull
     @Override
     public OnBackInvokedDispatcher getOnBackInvokedDispatcher() {
-
-        finish();
+        Intent intent = new Intent(ListOrderActivity.this, MainActivity.class);
+        startActivity(intent);
+        finishAffinity();
         return super.getOnBackInvokedDispatcher();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ListOrderActivity.this, MainActivity.class);
+        startActivity(intent);
+        finishAffinity();
+    }
 }

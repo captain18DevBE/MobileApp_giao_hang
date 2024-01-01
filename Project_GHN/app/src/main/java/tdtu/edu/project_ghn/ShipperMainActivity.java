@@ -89,15 +89,15 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
 
         //Testing data:
         LocalDateTime dateTime1 = LocalDateTime.now();
-        OrderDTO order1 = new OrderDTO("China", dateTime1, "Thời trang", "0343373617", "waiting");
+        OrderDTO order1 = new OrderDTO("China", "2023", "Thời trang", "0343373617", "waiting");
         allOrders.add(order1);
 
         LocalDateTime dateTime2 = dateTime1.plusDays(1);
-        OrderDTO order2 = new OrderDTO("Đồng Tháp", dateTime2, "Điện tử", "0194891030", "waiting");
+        OrderDTO order2 = new OrderDTO("Đồng Tháp", "2023", "Điện tử", "0194891030", "waiting");
         allOrders.add(order2);
 
         LocalDateTime dateTime3 = dateTime2.plusDays(1);
-        OrderDTO order3 = new OrderDTO("USA", dateTime3, "Đồ ăn", "9837291033", "waiting");
+        OrderDTO order3 = new OrderDTO("USA", "2023", "Đồ ăn", "9837291033", "waiting");
         allOrders.add(order3);
 
         orderAdapter = new ListOrderAdapter(this, allOrders);

@@ -25,12 +25,14 @@ import com.google.firebase.auth.FirebaseUser;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.zip.Inflater;
 
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.controller.DeliverOrderController;
 import tdtu.edu.project_ghn.controller.service.OnAddDeliverOrderListener;
 import tdtu.edu.project_ghn.controller.service.OnAddOrderMapListener;
+import tdtu.edu.project_ghn.controller.service.OnGetDeliverOrderByEmailUserListener;
 import tdtu.edu.project_ghn.entity.DeliverOrder;
 import tdtu.edu.project_ghn.entity.Product;
 import tdtu.edu.project_ghn.entity.Receiver;
@@ -51,8 +53,7 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
 
     Receiver receiver = new Receiver();
     DeliverOrderController deliverOrderController = new DeliverOrderController();
-    Map<String, DeliverOrder> orderMap = new HashMap<>();
-
+    Map<String, Object> orderMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,18 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
         deliverOrder = (DeliverOrder) getIntent().getSerializableExtra("deliverOrder");
         productDetail = deliverOrder.getProduct();
 
-        Log.d("du lieu intent", productDetail.getProductType());
+        deliverOrderController.getListDeliverOrdersByEmailUser(new OnGetDeliverOrderByEmailUserListener() {
+            @Override
+            public void onSuccess(Map<String, Object> values) {
+                orderMap = values;
+                Log.d("lay danh sach du lieu", orderMap.toString());
+            }
+
+            @Override
+            public void onFailure(String err) {
+                Log.d("lay danh sach du lieu", "that bai");
+            }
+        });
 
     }
 
