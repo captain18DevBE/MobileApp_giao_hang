@@ -23,11 +23,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.Inflater;
 
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.controller.DeliverOrderController;
 import tdtu.edu.project_ghn.controller.service.OnAddDeliverOrderListener;
+import tdtu.edu.project_ghn.controller.service.OnAddOrderMapListener;
 import tdtu.edu.project_ghn.entity.DeliverOrder;
 import tdtu.edu.project_ghn.entity.Product;
 import tdtu.edu.project_ghn.entity.Receiver;
@@ -48,6 +51,8 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
 
     Receiver receiver = new Receiver();
     DeliverOrderController deliverOrderController = new DeliverOrderController();
+    Map<String, DeliverOrder> orderMap = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +133,21 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
                 deliverOrder.setDateTime(dateTime);
 
 
-                deliverOrderController.addDeliverOrderByEmail(deliverOrder, new OnAddDeliverOrderListener() {
+//                deliverOrderController.addDeliverOrderByEmail(deliverOrder, new OnAddDeliverOrderListener() {
+//                    @Override
+//                    public void onSuccess() {
+//                        Toast.makeText(CustomerCreateOrderActivity3.this, "Tạo đơn hàng thành công!", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String err) {
+//                        Toast.makeText(CustomerCreateOrderActivity3.this, "Đã có lỗi xảy ra, tạo đơn hàng thất bại!", Toast.LENGTH_LONG).show();
+//                    }
+//                });
+
+                int idItem = orderMap.size()+1;
+                orderMap.put(""+idItem, deliverOrder);
+                deliverOrderController.addDeliverOrderMapByUserEmail(orderMap, new OnAddOrderMapListener() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(CustomerCreateOrderActivity3.this, "Tạo đơn hàng thành công!", Toast.LENGTH_LONG).show();
@@ -140,6 +159,9 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
                     }
                 });
 
+                Intent intent = new Intent(CustomerCreateOrderActivity3.this, ListOrderActivity.class);
+                startActivity(intent);
+                finishAffinity();
             }
         });
     }

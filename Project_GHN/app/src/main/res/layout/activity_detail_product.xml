@@ -252,6 +252,15 @@
         </RadioGroup>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/txtTotalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="Cước phí vận chuyển:"
+        android:textStyle="italic"
+        android:gravity="center"
+        />
     <Button
         android:id="@+id/btnContinue"
         android:layout_gravity="center"

@@ -8,10 +8,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,6 +25,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 
 import tdtu.edu.project_ghn.controller.service.OnGetCustomerByEmail;
+import tdtu.edu.project_ghn.controller.service.OnUpdateCustomerInfoListener;
 import tdtu.edu.project_ghn.entity.Customer;
 import tdtu.edu.project_ghn.view.activity.CustomerProfileActivity;
 
@@ -64,45 +68,66 @@ public class CustomerController {
     }
 
     //update detail information of customer
-    public void updateCustomerInf(Customer resp) {
+    public void updateCustomerInf(Customer resp, OnUpdateCustomerInfoListener listener) {
         DocumentReference documentReference = db.collection("customers").document(resp.getEmail());
         String imgLocalPath = resp.getImgPath();
-        if (!imgLocalPath.isEmpty()) {
-            Uri imgFile = Uri.fromFile(new File(resp.getImgPath()));
-            StorageReference userImageProfile = storageRef.child("images/avatar_users/"+imgFile.getLastPathSegment());
-            resp.setImgPath(imgFile.getLastPathSegment());
-            UploadTask uploadTask = userImageProfile.putFile(imgFile);
+        try {
+            if (!imgLocalPath.isEmpty()) {
+                Uri imgFile = Uri.fromFile(new File(resp.getImgPath()));
+                StorageReference userImageProfile = storageRef.child("images/avatar_users/"+imgFile.getLastPathSegment());
+                resp.setImgPath(imgFile.getLastPathSegment());
+                UploadTask uploadTask = userImageProfile.putFile(imgFile);
 
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.d("firebase", "upload image is failed");
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.d("firebase", "upload image is success");
-                }
-            });
-
-        }
-
-        documentReference
-                .update(
-                    "fullName", resp.getFullName(),
-                        "address", resp.getAddress(),
-                        "phoneNumber", resp.getPhoneNumber(),
-                        "imgPath", resp.getImgPath()
-                ).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("cap nhat thong tin", "thanh cong");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+                uploadTask.addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("cap nhat thong tin", "that bai");
+                        Log.d("firebase", "upload image is failed");
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.d("firebase", "upload image is success");
                     }
                 });
+
+            }
+        } catch (Exception e) {
+            Log.d("Cap nhat thong tin", "that bai!");
+        }
+
+            documentReference
+                    .update(
+                            "fullName", resp.getFullName(),
+                            "address", resp.getAddress(),
+                            "phoneNumber", resp.getPhoneNumber(),
+                            "imgPath", resp.getImgPath()
+                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d("cap nhat thong tin", "thanh cong");
+                            listener.onSuccess();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("cap nhat thong tin", "that bai");
+                            listener.onFailure(e.getMessage());
+                        }
+                    });
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(resp.getFullName())
+                .build();
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("Update fullname", "success!");
+                        }
+                    }
+                });
+
     }
 }
