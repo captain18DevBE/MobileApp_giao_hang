@@ -16,13 +16,15 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import tdtu.edu.project_ghn.controller.service.OnAddDeliverOrderListener;
 import tdtu.edu.project_ghn.controller.service.OnAddOrderMapListener;
 import tdtu.edu.project_ghn.controller.service.OnGetAllDocumentDeliverOrderListener;
 import tdtu.edu.project_ghn.controller.service.OnGetDeliverOrderByEmailUserListener;
+import tdtu.edu.project_ghn.controller.service.OnGetListNewOrdersListener;
 import tdtu.edu.project_ghn.entity.DeliverOrder;
 
 public class DeliverOrderController {
@@ -69,11 +71,17 @@ public class DeliverOrderController {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<Map<String, Object>> mapList = new ArrayList<>();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("lay danh sach du lieu", document.getId() + " => " + document.getData());
+                                Map<String, Object> data = document.getData();
+                                mapList.add(data);
+//                                Log.d("lay danh sach du lieu", ""+ document.getData());
+//                                Log.d("lay danh sach tung du lieu", document.getId() + " => " + document.getData());
                             }
+                            listener.onSuccess(mapList);
                         } else {
+                            listener.onFailure("da co loi xay ra");
                             Log.d("lay danh sach du lieu that bai", "Error getting documents: ", task.getException());
                         }
                     }
@@ -103,4 +111,8 @@ public class DeliverOrderController {
                     }
                 });
     }
+
+//    public void getListNewOrders(OnGetListNewOrdersListener listener) {
+//        db.collection("deliver_orders").
+//    }
 }

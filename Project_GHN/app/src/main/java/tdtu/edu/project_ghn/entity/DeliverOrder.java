@@ -14,10 +14,11 @@ public class DeliverOrder implements Serializable {
     private Product product;
     private float lengthOfRoad;
     private double totalPrice = 0.0;
-    public DeliverOrder() {
-    }
+    private int status = 0;
 
-    public DeliverOrder(Customer customer, String receiverAddress, Receiver receiver, LocalDateTime dateTime, String service, String typeOfTransport, Product product) {
+    public DeliverOrder() {}
+
+    public DeliverOrder(Customer customer, String receiverAddress, Receiver receiver, LocalDateTime dateTime, String service, String typeOfTransport, Product product, float lengthOfRoad, double totalPrice, int status) {
         this.customer = customer;
         this.receiverAddress = receiverAddress;
         this.receiver = receiver;
@@ -25,6 +26,17 @@ public class DeliverOrder implements Serializable {
         this.service = service;
         this.typeOfTransport = typeOfTransport;
         this.product = product;
+        this.lengthOfRoad = lengthOfRoad;
+        this.totalPrice = totalPrice;
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public double getTotalPrice() {

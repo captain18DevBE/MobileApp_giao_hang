@@ -44,9 +44,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.controller.CustomerController;
+import tdtu.edu.project_ghn.controller.DeliverOrderController;
+import tdtu.edu.project_ghn.controller.service.OnGetAllDocumentDeliverOrderListener;
 import tdtu.edu.project_ghn.entity.Customer;
 import tdtu.edu.project_ghn.model.OrderDTO;
 import tdtu.edu.project_ghn.view.activity.ChangeCustomerPassActivity;
@@ -62,6 +65,8 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
 
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
+    private DeliverOrderController deliverOrderController = new DeliverOrderController();
+
     Toolbar toolbar;
     private RecyclerView rcvListOrder;
     ProgressBar progressBar;
@@ -83,9 +88,13 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
         buildNavigation();
         initListener();
 
+        getDataListOrder();
+
         rcvListOrder.setLayoutManager(new LinearLayoutManager(this));
 
         navigationView.getMenu().findItem(R.id.nav_list_current_order).setChecked(true);
+
+
 
         //Testing data:
         LocalDateTime dateTime1 = LocalDateTime.now();
@@ -110,6 +119,36 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
                 Intent intent = new Intent(ShipperMainActivity.this, ShipperOrderDetailActivity.class);
                 intent.putExtra("state", orderDTO.getState());
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void getDataListOrder() {
+        deliverOrderController.getAllDocumentDeliverOrder(new OnGetAllDocumentDeliverOrderListener() {
+
+            @Override
+            public void onSuccess(List<Map<String, Object>> collectionOrders) {
+                for (Map<String, Object> objectMap : collectionOrders) {
+                    for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
+
+                        String key = entry.getKey();
+                        Map<String, Object>  value = (Map<String, Object>) entry.getValue();
+
+                        Long statusOrder = (Long) value.get("status");
+
+
+
+                        Log.d("du lieu", key);
+                        Log.d("du lieu", value.toString());
+                        Log.d("du lieu", statusOrder+"");
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String err) {
+
             }
         });
     }

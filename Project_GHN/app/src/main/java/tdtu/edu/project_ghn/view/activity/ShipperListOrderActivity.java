@@ -19,8 +19,12 @@ import androidx.appcompat.widget.Toolbar;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import tdtu.edu.project_ghn.R;
+import tdtu.edu.project_ghn.controller.DeliverOrderController;
+import tdtu.edu.project_ghn.controller.service.OnGetAllDocumentDeliverOrderListener;
+import tdtu.edu.project_ghn.entity.DeliverOrder;
 import tdtu.edu.project_ghn.model.OrderDTO;
 import tdtu.edu.project_ghn.view.adapter.ListOrderAdapter;
 
@@ -30,6 +34,8 @@ public class ShipperListOrderActivity extends AppCompatActivity {
     private ListOrderAdapter orderAdapter;
     private List<OrderDTO> allOrders = new ArrayList<>();
     private List<OrderDTO> filteredOrders = new ArrayList<>();
+
+    private Map<String, Object> listAllNewOrders;
     ProgressDialog progressDialog;
     ProgressBar progressBar;
     Toolbar toolbar;
@@ -48,6 +54,10 @@ public class ShipperListOrderActivity extends AppCompatActivity {
 
         rcvListOrder = findViewById(R.id.rcv_listOrder);
         rcvListOrder.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+
 
 
         //Testing data:
@@ -82,6 +92,8 @@ public class ShipperListOrderActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,9 +1,12 @@
 package tdtu.edu.project_ghn.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-public class OrderDTO {
+public class OrderDTO implements Serializable {
+    private String email;
+    private Long id;
     private String address;
 
     private String dateTime;
@@ -19,6 +22,26 @@ public class OrderDTO {
         this.dateTime = dateTime;
         this.type = type;
         this.phoneNumber = phoneNumber;
+        this.state = state;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setState(String state) {
         this.state = state;
     }
 
