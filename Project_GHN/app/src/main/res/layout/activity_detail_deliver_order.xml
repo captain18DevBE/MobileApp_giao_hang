@@ -103,12 +103,6 @@
             android:layout_height="wrap_content"
             android:text="Loại hàng: Điện tử" />
 
-        <ImageView
-            android:id="@+id/imgProduct"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/demo" />
 
         <TextView
             android:id="@+id/textView25"
@@ -178,7 +172,7 @@
         android:id="@+id/btnUpdateOrderState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nhận đơn hàng"
+        android:text="Hủy đơn hàng"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

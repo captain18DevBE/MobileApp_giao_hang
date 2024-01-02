@@ -15,7 +15,7 @@ public class OrderDTO implements Serializable {
     private String sizeProduct;
     private String typeOfProduct;
     private String noteForShipper;
-
+    private Double totalPrice;
 
 
     private String email;
@@ -36,6 +36,14 @@ public class OrderDTO implements Serializable {
         this.type = type;
         this.phoneNumber = phoneNumber;
         this.state = state;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public String getCustomerAddress() {

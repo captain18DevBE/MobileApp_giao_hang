@@ -86,8 +86,10 @@ public class ListOrderActivity extends AppCompatActivity {
                     String customerPhoneNumber = (String) customerMap.get("phoneNumber");
 
                     Long statusOrder = (Long) value.get("status");
+                    Double totalPrice = (Double) value.get("totalPrice");
                     String kindOfService = (String) value.get("service");
                     String kindOfTransport = (String) value.get("typeOfTransport");
+
 
                     orderDTO.setPhoneNumber(phoneNumber);
                     orderDTO.setAddress(address);
@@ -106,7 +108,7 @@ public class ListOrderActivity extends AppCompatActivity {
                     orderDTO.setSizeProduct(productSize);
                     orderDTO.setTypeOfProduct(kindOfProduct);
                     orderDTO.setNoteForShipper(notesForShipper);
-
+                    orderDTO.setTotalPrice(totalPrice);
 
                     orderDTOList.add(orderDTO);
 //                    Log.d("lay danh sach du lieu"+key, orderDTO.getId());
