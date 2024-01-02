@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ import tdtu.edu.project_ghn.controller.service.OnGetAllDocumentDeliverOrderListe
 
 public class ShipperOrderDetailActivity extends AppCompatActivity {
 
-    TextView txtWaitForShipper, txtBeingShipped, txtFinishedShipping, txtIsPaid, txtFinishedDate, txtDateCreated, txtShopAddress, txtShopPhone, txtReceiverName, txtReceiverAddress, txtAddressDetail, txtReceiverPhone, txtTransport, txtService, txtProductSize, txtProductWeight, txtProductType, txtDescription;
+    TextView txtWaitForShipper, txtBeingShipped, txtFinishedShipping, txtIsPaid, txtFinishedDate, txtDateCreated, txtShopAddress, txtShopPhone, txtReceiverName, txtReceiverAddress, txtAddressDetail, txtReceiverPhone, txtTransport, txtService, txtProductSize, txtProductWeight, txtProductType, txtDescription, txtTotalMoney;
     Button btnUpdateOrderState;
     Toolbar toolbar;
     ImageView imgProduct;
@@ -93,6 +94,7 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
         txtProductWeight = findViewById(R.id.txtProductWeight);
         txtProductType = findViewById(R.id.txtProductType);
         txtDescription = findViewById(R.id.txtDescription);
+        txtTotalMoney = findViewById(R.id.txtTotalMoney2);
         Log.d("check crash 1", "ok");
         buildMenuAction(toolbar);
 
@@ -186,6 +188,7 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
 
 
                             Long statusOrder = (Long) value.get("status");
+
                             String kindOfService = (String) value.get("service");
                             String serviceTypeUnicode = "";
                             switch (kindOfService) {
@@ -197,11 +200,16 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
                             String kindOfTransport = (String) value.get("typeOfTransport");
                             String transportTypeUnicode = "";
                             switch (kindOfTransport) {
-                                case "bike": transportTypeUnicode = "Xe máy (30.000 VND)"; break;
+                                case "motorBike": transportTypeUnicode = "Xe máy (30.000 VND)"; break;
                                 case "tricycle": transportTypeUnicode = "Xe ba gác (300.000 VND)"; break;
                                 default: transportTypeUnicode = kindOfTransport;
                             }
                             txtTransport.setText("Loại xe: " + transportTypeUnicode);
+
+                            Double totalPrice = (Double) value.get("totalPrice");
+                            DecimalFormat df = new DecimalFormat("0");
+                            String formattedPrice = df.format(totalPrice);
+                            txtTotalMoney.setText("TỔNG TIỀN: " + formattedPrice+" VND");
 
 
                             break; // Exit the loop as the matching order is found

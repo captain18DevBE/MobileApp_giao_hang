@@ -120,7 +120,6 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     receiver.setPaid(true);
-                    receiver.setAmountPay(Double.parseDouble(edt_amount_paid.getText().toString().trim()));
                     cashOnDelivery.setVisibility(View.VISIBLE);
                 }
                 else {
@@ -139,8 +138,10 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
                 receiver.setFullName(edt_ReceiverName.getText().toString().trim());
                 receiver.setPhoneNumber(edt_ReceiverPhoneNumber.getText().toString().trim());
                 receiver.setNotes(edt_ReceiverNotes.getText().toString().trim());
+                receiver.setAmountPay(Double.parseDouble(edt_amount_paid.getText().toString().trim()));
 
                 deliverOrder.setReceiver(receiver);
+                deliverOrder.setTotalPrice(deliverOrder.getTotalPrice() + Double.parseDouble(edt_amount_paid.getText().toString().trim()));
                 LocalDateTime dateTime = LocalDateTime.now();
                 deliverOrder.setDateTime(dateTime);
 
