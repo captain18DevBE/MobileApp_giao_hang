@@ -125,7 +125,6 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
                 }
                 else {
                     receiver.setPaid(false);
-                    receiver.setAmountPay(0.0);
                     cashOnDelivery.setVisibility(View.GONE);
                 }
             }
@@ -139,10 +138,16 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
                 receiver.setFullName(edt_ReceiverName.getText().toString().trim());
                 receiver.setPhoneNumber(edt_ReceiverPhoneNumber.getText().toString().trim());
                 receiver.setNotes(edt_ReceiverNotes.getText().toString().trim());
-                receiver.setAmountPay(Double.parseDouble(edt_amount_paid.getText().toString().trim()));
+
 
                 deliverOrder.setReceiver(receiver);
-                deliverOrder.setTotalPrice(deliverOrder.getTotalPrice() + Double.parseDouble(edt_amount_paid.getText().toString().trim()));
+                if (receiver.isPaid()) {
+                    deliverOrder.setTotalPrice(deliverOrder.getTotalPrice() + Double.parseDouble(edt_amount_paid.getText().toString().trim()));
+                    receiver.setAmountPay(Double.parseDouble(edt_amount_paid.getText().toString().trim()));
+                } else {
+                    deliverOrder.setTotalPrice(deliverOrder.getTotalPrice());
+                    receiver.setAmountPay(0.0);
+                }
                 LocalDateTime dateTime = LocalDateTime.now();
                 deliverOrder.setDateTime(dateTime);
 
