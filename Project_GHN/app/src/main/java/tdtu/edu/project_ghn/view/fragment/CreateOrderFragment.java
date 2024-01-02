@@ -24,6 +24,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -304,7 +306,7 @@ public class CreateOrderFragment extends Fragment {
         }
     }
 
-    private double calculateTotalPrice(String service, String tranSport, float lengthRoad) {
+    private double calculateTotalPrice(String service, String tranSport, double lengthRoad) {
         double result = 0.0;
         if (tranSport.equals("motorBike")) {
             result = 30000;
@@ -312,7 +314,7 @@ public class CreateOrderFragment extends Fragment {
                 if (lengthRoad <= 10) {
                     result += 100000;
                 } else {
-                    float tmpRoad = lengthRoad - 10;
+                    double tmpRoad = lengthRoad - 10;
                     result += 100000 + tmpRoad*5.000;
                 }
             } else {
@@ -321,13 +323,13 @@ public class CreateOrderFragment extends Fragment {
                 } else if (lengthRoad >10 && lengthRoad <= 15) {
                     result += 30000;
                 } else {
-                    float tmpRoad = lengthRoad - 15;
+                    double tmpRoad = lengthRoad - 15;
                     result += 30000 + tmpRoad*5.500;
                 }*/
                 if (lengthRoad <= 10) {
                     result += 30000;
                 } else {
-                    float tmpRoad = lengthRoad - 10;
+                    double tmpRoad = lengthRoad - 10;
                     result += 30000 + tmpRoad*2.000;
                 }
             }
@@ -349,19 +351,18 @@ public class CreateOrderFragment extends Fragment {
                 if (lengthRoad <= 10) {
                     result += 100000;
                 } else {
-                    float tmpRoad = lengthRoad - 10;
+                    double tmpRoad = lengthRoad - 10;
                     result += 100000 + tmpRoad*5.000;
                 }
             } else {
                 if (lengthRoad <= 10) {
                     result += 30000;
                 } else {
-                    float tmpRoad = lengthRoad - 10;
+                    double tmpRoad = lengthRoad - 10;
                     result += 30000 + tmpRoad*2.000;
                 }
             }
         }
-
         return result;
     }
 
