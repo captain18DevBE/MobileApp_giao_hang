@@ -17,16 +17,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.controller.DeliverOrderController;
+import tdtu.edu.project_ghn.controller.service.OnAddDeliverOrderListener;
 import tdtu.edu.project_ghn.controller.service.OnGetAllDocumentDeliverOrderListener;
+import tdtu.edu.project_ghn.model.OrderDTO;
 
 public class ShipperOrderDetailActivity extends AppCompatActivity {
-
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    OrderDTO orderDTO;
     TextView txtWaitForShipper, txtBeingShipped, txtFinishedShipping, txtIsPaid, txtFinishedDate, txtDateCreated, txtShopAddress, txtShopPhone, txtReceiverName, txtReceiverAddress, txtAddressDetail, txtReceiverPhone, txtTransport, txtService, txtProductSize, txtProductWeight, txtProductType, txtDescription, txtTotalMoney;
     Button btnUpdateOrderState;
     Toolbar toolbar;
@@ -34,12 +40,12 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
     //start test update orderdetail UI corresponds to data.
     boolean waitForShipper = false, beingShipped = false, FinishedShipping = false, IsPaid = false;
     private DeliverOrderController deliverOrderController = new DeliverOrderController();
-    String receivedKey;
+    String receivedKey, customerEmail;
 
     private void updateOrderState() {
         if(waitForShipper) {
             txtWaitForShipper.setTextColor(Color.GREEN);
-            btnUpdateOrderState.setText("Đã nhận hàng");
+            btnUpdateOrderState.setText("Đang giao hàng");
         }
         if(beingShipped) {
             waitForShipper = true;
@@ -72,6 +78,8 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipper_order_detail);
+
+        orderDTO = (OrderDTO) getIntent().getSerializableExtra("orderSelected");
 
         txtWaitForShipper = findViewById(R.id.txtWaitForShipper);
         txtBeingShipped = findViewById(R.id.txtBeingShipped);
@@ -107,6 +115,7 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
         imgProduct.setImageBitmap(bitmap);
 
         receivedKey = getIntent().getStringExtra("key");
+        customerEmail = getIntent().getStringExtra("email");
         getOrderDetail();
 
 
@@ -117,10 +126,40 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!waitForShipper) {
                     waitForShipper = true;
+                    deliverOrderController.updateStateDeliverOrder(customerEmail, receivedKey, 0, new OnAddDeliverOrderListener() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("cap nhat trang thai don hang", "thanh cong");
+                        }
+                        @Override
+                        public void onFailure(String err) {
+                            Log.d("cap nhat trang thai don hang", "that bai");
+                        }
+                    });
                 } else if (!beingShipped) {
                     beingShipped = true;
+                    deliverOrderController.updateStateDeliverOrder(customerEmail, receivedKey, 1, new OnAddDeliverOrderListener() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("cap nhat trang thai don hang", "thanh cong");
+                        }
+                        @Override
+                        public void onFailure(String err) {
+                            Log.d("cap nhat trang thai don hang", "that bai");
+                        }
+                    });
                 } else if (!FinishedShipping) {
                         FinishedShipping = true;
+                    deliverOrderController.updateStateDeliverOrder(customerEmail, receivedKey, 2, new OnAddDeliverOrderListener() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("cap nhat trang thai don hang", "thanh cong");
+                        }
+                        @Override
+                        public void onFailure(String err) {
+                            Log.d("cap nhat trang thai don hang", "that bai");
+                        }
+                    });
                 }
                 updateOrderState();
             }

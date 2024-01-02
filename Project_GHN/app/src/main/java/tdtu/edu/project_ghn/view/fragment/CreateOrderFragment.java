@@ -80,6 +80,7 @@ public class CreateOrderFragment extends Fragment {
             @Override
             public void onSuccess(Customer customer) {
                 mCustomer = customer;
+                txtShopAddress.setText(mCustomer.getAddress());
             }
 
             @Override
