@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 
 
 public class OrderDTO implements Serializable {
+<<<<<<< HEAD
+    String key;
+=======
 
     private String customerAddress;
     private String customerName;
@@ -18,6 +21,7 @@ public class OrderDTO implements Serializable {
     private Double totalPrice;
 
 
+>>>>>>> 08132d5e39bcb5601e869c3eb674f1ee9c740dbb
     private String email;
     private String id;
     private String address;
@@ -30,7 +34,12 @@ public class OrderDTO implements Serializable {
     public OrderDTO() {
     }
 
+<<<<<<< HEAD
+    public OrderDTO(String key, String address, String dateTime, String type, String phoneNumber, String state) {
+        this.key = key;
+=======
     public OrderDTO(String address, String dateTime, String type, String phoneNumber, Long state) {
+>>>>>>> 08132d5e39bcb5601e869c3eb674f1ee9c740dbb
         this.address = address;
         this.dateTime = dateTime;
         this.type = type;
@@ -169,5 +178,13 @@ public class OrderDTO implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+<<<<<<< HEAD
+    public String getState() { return state; }
+
+    public String getKey() {
+        return key;
+    }
+=======
     public Long getState() { return state; }
+>>>>>>> 08132d5e39bcb5601e869c3eb674f1ee9c740dbb
 }

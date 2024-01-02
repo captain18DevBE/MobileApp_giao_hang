@@ -88,12 +88,15 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
         buildNavigation();
         initListener();
 
-        getDataListOrder();
+
 
         rcvListOrder.setLayoutManager(new LinearLayoutManager(this));
+        getDataListOrder();
 
         navigationView.getMenu().findItem(R.id.nav_list_current_order).setChecked(true);
 
+<<<<<<< HEAD
+=======
 
 
         //Testing data:
@@ -121,6 +124,7 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
                 startActivity(intent);
             }
         });
+>>>>>>> 08132d5e39bcb5601e869c3eb674f1ee9c740dbb
     }
 
     private void getDataListOrder() {
@@ -133,17 +137,55 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
 
                         String key = entry.getKey();
                         Map<String, Object>  value = (Map<String, Object>) entry.getValue();
+                        Map<String, Object> dateTime = (Map<String, Object>) value.get("dateTime");
+
+                        Long year = (Long) dateTime.get("year");
+                        Long month = (Long) dateTime.get("monthValue");
+                        Long dayOfMonth = (Long) dateTime.get("dayOfMonth");
+                        Long timeOfDay = (Long) dateTime.get("hour");
+                        Long minute = (Long) dateTime.get("minute");
+                        Long second = (Long) dateTime.get("second");
+
+                        String strDateTime = ""+year+"-"+month+"-"+dayOfMonth+"  "+timeOfDay+":"+minute+":"+second;
+
 
                         Long statusOrder = (Long) value.get("status");
 
+                        Map<String, Object> product = (Map<String, Object>) value.get("product");
+                        String productType = (String) product.get("productType");
+                        String productTypeUnicode = "";
+                        switch (productType) {
+                            case "thoi trang": productTypeUnicode = "Thời trang"; break;
+                            case "dien tu": productTypeUnicode = "Điện tử"; break;
+                            case "thuc pham": productTypeUnicode = "Thực phẩm"; break;
+                        }
 
+                        Map<String, Object> receiver = (Map<String, Object>) value.get("receiver");
+                        String receiverAddress = (String) receiver.get("address");
+                        String receiverPhone = (String) receiver.get("phoneNumber");
 
-                        Log.d("du lieu", key);
-                        Log.d("du lieu", value.toString());
-                        Log.d("du lieu", statusOrder+"");
+                        // Create a new OrderDTO object with the data
+                        OrderDTO order = new OrderDTO(key, receiverAddress, strDateTime, productTypeUnicode, receiverPhone, statusOrder.toString());
+
+                        // Add the new order to the allOrders list
+                        allOrders.add(order);
+
 
                     }
                 }
+
+                // Set the adapter for the RecyclerView
+                orderAdapter = new ListOrderAdapter(ShipperMainActivity.this, allOrders);
+                rcvListOrder.setAdapter(orderAdapter);
+                orderAdapter.setOnItemClickListener(new ListOrderAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(OrderDTO orderDTO) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        Intent intent = new Intent(ShipperMainActivity.this, ShipperOrderDetailActivity.class);
+                        intent.putExtra("key", orderDTO.getKey());
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
