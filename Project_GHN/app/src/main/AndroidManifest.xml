@@ -24,6 +24,12 @@
         android:theme="@style/Theme.Project_GHN"
         tools:targetApi="31">
         <activity
+            android:name=".view.activity.DetailDeliverOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.ShipperListOrderActivity"
             android:exported="false" />
         <activity

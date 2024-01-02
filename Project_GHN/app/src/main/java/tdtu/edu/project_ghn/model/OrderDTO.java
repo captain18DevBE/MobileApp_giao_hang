@@ -5,24 +5,109 @@ import java.time.LocalDateTime;
 
 
 public class OrderDTO implements Serializable {
+
+    private String customerAddress;
+    private String customerName;
+    private String detailAddress;
+    private String customerPhoneNumber;
+    private String kindOfTransport;
+    private String kindOfService;
+    private String sizeProduct;
+    private String typeOfProduct;
+    private String noteForShipper;
+
+
+
     private String email;
-    private Long id;
+    private String id;
     private String address;
 
     private String dateTime;
     private String type;
     private String phoneNumber;
-    private String state;
+    private Long state;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String address, String dateTime, String type, String phoneNumber, String state) {
+    public OrderDTO(String address, String dateTime, String type, String phoneNumber, Long state) {
         this.address = address;
         this.dateTime = dateTime;
         this.type = type;
         this.phoneNumber = phoneNumber;
         this.state = state;
+    }
+
+    public String getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+    }
+
+    public String getCustomerPhoneNumber() {
+        return customerPhoneNumber;
+    }
+
+    public void setCustomerPhoneNumber(String customerPhoneNumber) {
+        this.customerPhoneNumber = customerPhoneNumber;
+    }
+
+    public String getKindOfTransport() {
+        return kindOfTransport;
+    }
+
+    public void setKindOfTransport(String kindOfTransport) {
+        this.kindOfTransport = kindOfTransport;
+    }
+
+    public String getKindOfService() {
+        return kindOfService;
+    }
+
+    public void setKindOfService(String kindOfService) {
+        this.kindOfService = kindOfService;
+    }
+
+    public String getSizeProduct() {
+        return sizeProduct;
+    }
+
+    public void setSizeProduct(String sizeProduct) {
+        this.sizeProduct = sizeProduct;
+    }
+
+    public String getTypeOfProduct() {
+        return typeOfProduct;
+    }
+
+    public void setTypeOfProduct(String typeOfProduct) {
+        this.typeOfProduct = typeOfProduct;
+    }
+
+    public String getNoteForShipper() {
+        return noteForShipper;
+    }
+
+    public void setNoteForShipper(String noteForShipper) {
+        this.noteForShipper = noteForShipper;
     }
 
     public String getEmail() {
@@ -33,15 +118,15 @@ public class OrderDTO implements Serializable {
         this.email = email;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public void setState(String state) {
+    public void setState(Long state) {
         this.state = state;
     }
 
@@ -76,5 +161,5 @@ public class OrderDTO implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    public String getState() { return state; }
+    public Long getState() { return state; }
 }
