@@ -52,6 +52,7 @@ public class OrderDTO implements Serializable {
         this.state = state;
     }
 
+
     public Double getTotalPrice() {
         return totalPrice;
     }

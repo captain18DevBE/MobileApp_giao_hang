@@ -49,9 +49,6 @@ public class ListOrderAdapter extends RecyclerView.Adapter<ListOrderAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderDTO orderDTO = orderDTOList.get(position);
-        //load anh
-//        Glide.with(mContext)
-//                .load()
 
         holder.address.setText(orderDTO.getAddress());
         holder.dateTime.setText(orderDTO.getDateTime().toString());
