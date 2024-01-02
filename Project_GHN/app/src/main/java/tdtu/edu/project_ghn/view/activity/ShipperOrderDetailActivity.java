@@ -16,25 +16,42 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import tdtu.edu.project_ghn.R;
 import tdtu.edu.project_ghn.controller.DeliverOrderController;
+import tdtu.edu.project_ghn.controller.ShipperController;
+import tdtu.edu.project_ghn.controller.service.OnAddOrderMapListener;
+import tdtu.edu.project_ghn.controller.service.OnAddReceivedOrderListener;
 import tdtu.edu.project_ghn.controller.service.OnGetAllDocumentDeliverOrderListener;
+import tdtu.edu.project_ghn.controller.service.OnGetDeliverOrderByEmailUserListener;
+import tdtu.edu.project_ghn.model.OrderDTO;
 
 public class ShipperOrderDetailActivity extends AppCompatActivity {
-
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     TextView txtWaitForShipper, txtBeingShipped, txtFinishedShipping, txtIsPaid, txtFinishedDate, txtDateCreated, txtShopAddress, txtShopPhone, txtReceiverName, txtReceiverAddress, txtAddressDetail, txtReceiverPhone, txtTransport, txtService, txtProductSize, txtProductWeight, txtProductType, txtDescription, txtTotalMoney;
     Button btnUpdateOrderState;
     Toolbar toolbar;
     ImageView imgProduct;
     //start test update orderdetail UI corresponds to data.
     boolean waitForShipper = false, beingShipped = false, FinishedShipping = false, IsPaid = false;
+    private ShipperController shipperController = new ShipperController();
     private DeliverOrderController deliverOrderController = new DeliverOrderController();
     String receivedKey;
+
+
+    private OrderDTO orderDTO = new OrderDTO();
+    Map<String, Object> orderMap;
+
+
 
     private void updateOrderState() {
         if(waitForShipper) {
@@ -72,6 +89,20 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shipper_order_detail);
+
+        shipperController.getListDeliverOrdersByEmailUser(new OnGetDeliverOrderByEmailUserListener() {
+            @Override
+            public void onSuccess(Map<String, Object> values) {
+                orderMap = values;
+                Log.d("lay danh sach du lieu", orderMap.toString());
+            }
+
+            @Override
+            public void onFailure(String err) {
+                orderMap = new HashMap<>();
+                Log.d("lay danh sach du lieu", "that bai");
+            }
+        });
 
         txtWaitForShipper = findViewById(R.id.txtWaitForShipper);
         txtBeingShipped = findViewById(R.id.txtBeingShipped);
@@ -115,7 +146,28 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
         btnUpdateOrderState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(!waitForShipper) {
+
+
+                    int idItem = orderMap.size()+1;
+                    orderMap.put(""+idItem, orderDTO);
+                    Log.d("test du lieu map", orderMap.toString());
+                    shipperController.addReceivedOrderByShipperUserName(user.getEmail(), orderMap, new OnAddReceivedOrderListener() {
+
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(ShipperOrderDetailActivity.this, "Tạo đơn hàng thành công!", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onFailure(String err) {
+                            Toast.makeText(ShipperOrderDetailActivity.this, "Đã có lỗi xảy ra, tạo đơn hàng thất bại!", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+
                     waitForShipper = true;
                 } else if (!beingShipped) {
                     beingShipped = true;
@@ -136,6 +188,8 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
                     for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
                         String entryKey = entry.getKey();
                         if (entryKey.equals(receivedKey)) {
+                            orderDTO.setId(entryKey);
+
                             Map<String, Object> value = (Map<String, Object>) entry.getValue();
                             Map<String, Object> dateTime = (Map<String, Object>) value.get("dateTime");
 
@@ -151,6 +205,8 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
                             String strDateTime = ""+year+"-"+month+"-"+dayOfMonth;
                             txtDateCreated.setText("Ngày tạo: " + strDateTime);
 
+                            orderDTO.setDateTime(strDateTime);
+
 
                             Map<String, Object> productMap = (Map<String, Object>) value.get("product");
                             String productType = (String) productMap.get("productType");
@@ -161,8 +217,13 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
                                 case "thuc pham": productTypeUnicode = "Thực phẩm"; break;
                             }
                             txtProductType.setText("Loại hàng: "+productTypeUnicode);
+                            orderDTO.setTypeOfProduct(productTypeUnicode);
+
                             String productSize = (String) productMap.get("productSize");
                             txtProductSize.setText("Kích cỡ: " + productSize);
+                            orderDTO.setSizeProduct(productSize);
+
+
                             String productWeight = (String) productMap.get("weight").toString();
                             txtProductWeight.setText("Trọng lượng: " + productWeight + "KG");
 
@@ -170,8 +231,13 @@ public class ShipperOrderDetailActivity extends AppCompatActivity {
                             Map<String, Object> receiverMap = (Map<String, Object>) value.get("receiver");
                             String receiverAddress = (String) receiverMap.get("address");
                             txtReceiverAddress.setText("Địa chỉ người nhận: " + receiverAddress);
+
+
+
                             String phoneNumber = (String) receiverMap.get("phoneNumber");
                             txtReceiverPhone.setText("SĐT người nhận: " + phoneNumber);
+                            orderDTO.setPhoneNumber(phoneNumber);
+
                             String detailAddress = (String) receiverMap.get("detailLocal");
                             txtAddressDetail.setText("Chi tết số nhà, số tầng: " + detailAddress);
                             String notesForShipper = (String) receiverMap.get("notes");

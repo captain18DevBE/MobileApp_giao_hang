@@ -152,17 +152,6 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
                 deliverOrder.setDateTime(dateTime);
 
 
-//                deliverOrderController.addDeliverOrderByEmail(deliverOrder, new OnAddDeliverOrderListener() {
-//                    @Override
-//                    public void onSuccess() {
-//                        Toast.makeText(CustomerCreateOrderActivity3.this, "Tạo đơn hàng thành công!", Toast.LENGTH_LONG).show();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String err) {
-//                        Toast.makeText(CustomerCreateOrderActivity3.this, "Đã có lỗi xảy ra, tạo đơn hàng thất bại!", Toast.LENGTH_LONG).show();
-//                    }
-//                });
 
                 int idItem = orderMap.size()+1;
                 orderMap.put(""+idItem, deliverOrder);
