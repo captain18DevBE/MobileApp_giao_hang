@@ -48,19 +48,6 @@ public class ListOrderActivity extends AppCompatActivity {
 
 
 
-        //test get api
-//        deliverOrderController.getAllDocumentDeliverOrder(new OnGetAllDocumentDeliverOrderListener() {
-//            @Override
-//            public void onSuccess(Map<String, Map<String, DeliverOrder>> collectionOrders) {
-//                Log.d("lay danh sach du lieu", "abcssad");
-//            }
-//
-//            @Override
-//            public void onFailure(String err) {
-//
-//            }
-//        });
-
         deliverOrderController.getListDeliverOrdersByEmailUser(new OnGetDeliverOrderByEmailUserListener() {
             @Override
             public void onSuccess(Map<String, Object> values) {
@@ -84,19 +71,47 @@ public class ListOrderActivity extends AppCompatActivity {
 
                     Map<String, Object> productMap = (Map<String, Object>) value.get("product");
                     String productType = (String) productMap.get("productType");
+                    String productSize = (String) productMap.get("productSize");
+                    String kindOfProduct = (String) productMap.get("productType");
 
                     Map<String, Object> receiverMap = (Map<String, Object>) value.get("receiver");
                     String phoneNumber = (String) receiverMap.get("phoneNumber");
+                    String detailAddress = (String) receiverMap.get("detailLocal");
+                    String notesForShipper = (String) receiverMap.get("notes");
+
+                    Map<String, Object> customerMap = (Map<String, Object>) value.get("customer");
+                    String customerEmail = (String) customerMap.get("email");
+                    String customerAddress = (String) customerMap.get("address");
+                    String customerName = (String) customerMap.get("fullName");
+                    String customerPhoneNumber = (String) customerMap.get("phoneNumber");
+
+                    Long statusOrder = (Long) value.get("status");
+                    String kindOfService = (String) value.get("service");
+                    String kindOfTransport = (String) value.get("typeOfTransport");
 
                     orderDTO.setPhoneNumber(phoneNumber);
                     orderDTO.setAddress(address);
                     orderDTO.setDateTime(strDateTime);
                     orderDTO.setType(productType);
+                    orderDTO.setEmail(customerEmail);
+                    orderDTO.setId(key);
+                    orderDTO.setState(statusOrder);
+
+                    orderDTO.setCustomerAddress(customerAddress);
+                    orderDTO.setCustomerName(customerName);
+                    orderDTO.setDetailAddress(detailAddress);
+                    orderDTO.setCustomerPhoneNumber(customerPhoneNumber);
+                    orderDTO.setKindOfTransport(kindOfTransport);
+                    orderDTO.setKindOfService(kindOfService);
+                    orderDTO.setSizeProduct(productSize);
+                    orderDTO.setTypeOfProduct(kindOfProduct);
+                    orderDTO.setNoteForShipper(notesForShipper);
 
 
                     orderDTOList.add(orderDTO);
-//                    Log.d("lay danh sach du lieu"+key, orderDTO.getDateTime());
+//                    Log.d("lay danh sach du lieu"+key, orderDTO.getId());
                     initRCV();
+
                 }
             }
 
@@ -114,6 +129,14 @@ public class ListOrderActivity extends AppCompatActivity {
         recyclerView.setAdapter(listOrderAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        listOrderAdapter.setOnItemClickListener(new ListOrderAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(OrderDTO orderDTO) {
+                Intent intent = new Intent(ListOrderActivity.this, DetailDeliverOrderActivity.class);
+                intent.putExtra("orderSelected", orderDTO);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

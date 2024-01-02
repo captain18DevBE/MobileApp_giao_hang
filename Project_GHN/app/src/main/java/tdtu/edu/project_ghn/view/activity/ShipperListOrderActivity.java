@@ -63,6 +63,7 @@ public class ShipperListOrderActivity extends AppCompatActivity {
         //Testing data:
 
         LocalDateTime dateTime1 = LocalDateTime.now();
+<<<<<<< HEAD
         OrderDTO order1 = new OrderDTO("12", "TP.HCM", "2023", "Thời trang", "0343373617", "delivering");
         allOrders.add(order1);
 
@@ -72,6 +73,17 @@ public class ShipperListOrderActivity extends AppCompatActivity {
 
         LocalDateTime dateTime3 = dateTime2.plusDays(1);
         OrderDTO order3 = new OrderDTO("14", "Dak Lak", "2023", "Đồ ăn", "9837291033", "delivered");
+=======
+        OrderDTO order1 = new OrderDTO("TP.HCM", "2023", "Thời trang", "0343373617", 1l);
+        allOrders.add(order1);
+
+        LocalDateTime dateTime2 = dateTime1.plusDays(1);
+        OrderDTO order2 = new OrderDTO("Hanoi", "2023", "Điện tử", "0194891030", 1l);
+        allOrders.add(order2);
+
+        LocalDateTime dateTime3 = dateTime2.plusDays(1);
+        OrderDTO order3 = new OrderDTO("Dak Lak", "2023", "Đồ ăn", "9837291033", 1l);
+>>>>>>> 08132d5e39bcb5601e869c3eb674f1ee9c740dbb
         allOrders.add(order3);
 
         for (OrderDTO order : allOrders) {
