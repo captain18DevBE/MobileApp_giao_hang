@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -113,7 +114,7 @@ public class DeliverOrderController {
                 });
     }
 
-//    public void getListNewOrders(OnGetListNewOrdersListener listener) {
-//        db.collection("deliver_orders").
-//    }
+    public void updateStateDeliverOrder(String email, String idOrder, long stateUpdate) {
+        DocumentReference deliverOrder = db.collection("deliver_orders").document(email);
+    }
 }
