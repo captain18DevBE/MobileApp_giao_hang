@@ -23,6 +23,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import tdtu.edu.project_ghn.controller.service.OnGetCustomerByEmail;
 import tdtu.edu.project_ghn.controller.service.OnUpdateCustomerInfoListener;
@@ -38,7 +40,9 @@ public class CustomerController {
     public boolean signUp(Customer customer) {
         boolean result = false;
 
+        Map<String, Object> objectMap = new HashMap<>();
         db.collection("customers").document(customer.getEmail()).set(customer);
+        db.collection("deliver_orders").document(customer.getEmail()).set(objectMap);
         return true;
     }
 

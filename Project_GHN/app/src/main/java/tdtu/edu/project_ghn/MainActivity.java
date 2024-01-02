@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String email = user.getEmail();
         String fullName = user.getDisplayName();
         txtNav_UserEmail.setText(email);
-        if (!fullName.isEmpty()) {
+        if (fullName != null) {
             txtNav_UserName.setText(fullName);
         } else {
             txtNav_UserName.setText("Chưa cập nhật!");
