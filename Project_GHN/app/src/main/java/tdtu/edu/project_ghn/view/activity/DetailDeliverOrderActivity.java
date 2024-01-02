@@ -1,7 +1,9 @@
 package tdtu.edu.project_ghn.view.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -40,6 +42,7 @@ public class DetailDeliverOrderActivity extends AppCompatActivity {
         initListener();
 
         orderDTO = (OrderDTO) getIntent().getSerializableExtra("orderSelected");
+
 
         updateUI();
     }
@@ -89,18 +92,37 @@ public class DetailDeliverOrderActivity extends AppCompatActivity {
         btnUpdateOrderState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deliverOrderController.updateStateDeliverOrder(user.getEmail(), orderDTO.getId(), -1, new OnAddDeliverOrderListener() {
-                    @Override
-                    public void onSuccess() {
-                        Log.d("huy don hang", "thanh cong");
-                        
-                    }
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(DetailDeliverOrderActivity.this);
+                builder.setTitle("HỦY ĐƠN HÀNG");
+                builder.setMessage("Bạn có muốn hủy đơn hàng này?");
+                builder.setIcon(android.R.drawable.ic_dialog_alert);
 
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onFailure(String err) {
-                        Log.d("huy don hang", "that bai");
+                    public void onClick(DialogInterface dialog, int which) {
+                        deliverOrderController.updateStateDeliverOrder(user.getEmail(), orderDTO.getId(), -1, new OnAddDeliverOrderListener() {
+                            @Override
+                            public void onSuccess() {
+                                Log.d("huy don hang", "thanh cong");
+
+                            }
+
+                            @Override
+                            public void onFailure(String err) {
+                                Log.d("huy don hang", "that bai");
+                            }
+                        });
                     }
                 });
+
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
