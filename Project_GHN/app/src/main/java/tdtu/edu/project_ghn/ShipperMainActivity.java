@@ -95,22 +95,6 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
 
         navigationView.getMenu().findItem(R.id.nav_list_current_order).setChecked(true);
 
-<<<<<<< HEAD
-=======
-
-
-        //Testing data:
-        LocalDateTime dateTime1 = LocalDateTime.now();
-        OrderDTO order1 = new OrderDTO("China", "2023", "Thời trang", "0343373617", 1L);
-        allOrders.add(order1);
-
-        LocalDateTime dateTime2 = dateTime1.plusDays(1);
-        OrderDTO order2 = new OrderDTO("Đồng Tháp", "2023", "Điện tử", "0194891030", 0l);
-        allOrders.add(order2);
-
-        LocalDateTime dateTime3 = dateTime2.plusDays(1);
-        OrderDTO order3 = new OrderDTO("USA", "2023", "Đồ ăn", "9837291033", 0l);
-        allOrders.add(order3);
 
         orderAdapter = new ListOrderAdapter(this, allOrders);
         rcvListOrder.setAdapter(orderAdapter);
@@ -124,7 +108,6 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
                 startActivity(intent);
             }
         });
->>>>>>> 08132d5e39bcb5601e869c3eb674f1ee9c740dbb
     }
 
     private void getDataListOrder() {
@@ -165,7 +148,7 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
                         String receiverPhone = (String) receiver.get("phoneNumber");
 
                         // Create a new OrderDTO object with the data
-                        OrderDTO order = new OrderDTO(key, receiverAddress, strDateTime, productTypeUnicode, receiverPhone, statusOrder.toString());
+                        OrderDTO order = new OrderDTO();
 
                         // Add the new order to the allOrders list
                         allOrders.add(order);
