@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 
 public class OrderDTO implements Serializable {
+
     private String key;
 
     private String customerAddress;
@@ -190,5 +191,9 @@ public class OrderDTO implements Serializable {
     }
 
     public Long getState() { return state; }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
 }

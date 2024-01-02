@@ -52,7 +52,7 @@ public class ListOrderAdapter extends RecyclerView.Adapter<ListOrderAdapter.View
 
         holder.address.setText(orderDTO.getAddress());
         holder.dateTime.setText(orderDTO.getDateTime().toString());
-        holder.type.setText(orderDTO.getType());
+        holder.type.setText(orderDTO.getTypeOfProduct());
         holder.phoneNumber.setText(orderDTO.getPhoneNumber());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
