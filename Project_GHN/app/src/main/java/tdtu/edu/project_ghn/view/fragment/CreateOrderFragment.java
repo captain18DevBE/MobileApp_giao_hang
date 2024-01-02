@@ -117,6 +117,7 @@ public class CreateOrderFragment extends Fragment {
 
                 intent.putExtra("address", txtAddress.getText().toString());
                 intent.putExtra("deliverOrder", deliverOrder);
+                Log.d("total price test 1", String.valueOf(deliverOrder.getTotalPrice()));
                 startActivity(intent);
             }
         });
@@ -306,23 +307,33 @@ public class CreateOrderFragment extends Fragment {
     private double calculateTotalPrice(String service, String tranSport, float lengthRoad) {
         double result = 0.0;
         if (tranSport.equals("motorBike")) {
+            result = 30000;
             if (service.equals("fast")) {
-                if (lengthRoad <= 2) {
-                    result = 16000;
+                if (lengthRoad <= 10) {
+                    result += 100000;
                 } else {
-                    float tmpRoad = lengthRoad - 2;
-                    result = 16000 + tmpRoad*5.500;
+                    float tmpRoad = lengthRoad - 10;
+                    result += 100000 + tmpRoad*5.000;
                 }
             } else {
-                if (lengthRoad <= 10) {
-                    result = 20000;
+                /*if (lengthRoad <= 10) {
+                    result += 25000;
                 } else if (lengthRoad >10 && lengthRoad <= 15) {
-                    result = 25000;
+                    result += 30000;
+                } else {
+                    float tmpRoad = lengthRoad - 15;
+                    result += 30000 + tmpRoad*5.500;
+                }*/
+                if (lengthRoad <= 10) {
+                    result += 30000;
+                } else {
+                    float tmpRoad = lengthRoad - 10;
+                    result += 30000 + tmpRoad*2.000;
                 }
             }
 
         } else if (tranSport.equals("tricycle")) {
-            if (lengthRoad <= 4) {
+            /*if (lengthRoad <= 4) {
                 result = 165000;
             } else if (lengthRoad >4 && lengthRoad <= 10){
                 result = 165000 + (lengthRoad-4)*20000;
@@ -332,6 +343,22 @@ public class CreateOrderFragment extends Fragment {
                 result = 165000 + 6*20000 + 5*14500 + (lengthRoad - 15)*14000;
             } else {
                 result = 165000 + 6*20000 + 5*14500 + 25*14000 + (lengthRoad - 40)*8000;
+            }*/
+            result = 300000;
+            if (service.equals("fast")) {
+                if (lengthRoad <= 10) {
+                    result += 100000;
+                } else {
+                    float tmpRoad = lengthRoad - 10;
+                    result += 100000 + tmpRoad*5.000;
+                }
+            } else {
+                if (lengthRoad <= 10) {
+                    result += 30000;
+                } else {
+                    float tmpRoad = lengthRoad - 10;
+                    result += 30000 + tmpRoad*2.000;
+                }
             }
         }
 

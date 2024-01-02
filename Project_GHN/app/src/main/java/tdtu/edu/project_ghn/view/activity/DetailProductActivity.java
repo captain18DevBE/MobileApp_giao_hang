@@ -68,7 +68,8 @@ public class DetailProductActivity extends AppCompatActivity {
         double totalPrice = deliverOrder.getTotalPrice();
         DecimalFormat decimalFormat = new DecimalFormat("#.#");
         decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
-        txtTotalPrice.setText("Cước phí vận chuyển: "+Double.parseDouble(decimalFormat.format(totalPrice)));
+        Log.d("total price test", String.valueOf(totalPrice));
+        txtTotalPrice.setText("Cước phí vận chuyển: " + Double.parseDouble(decimalFormat.format(totalPrice)));
     }
 
     private void buildMenu() {
