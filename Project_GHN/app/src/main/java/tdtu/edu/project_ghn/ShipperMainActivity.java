@@ -141,6 +141,7 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
                             case "thoi trang": productTypeUnicode = "Thời trang"; break;
                             case "dien tu": productTypeUnicode = "Điện tử"; break;
                             case "thuc pham": productTypeUnicode = "Thực phẩm"; break;
+                            default: productTypeUnicode = productType;
                         }
 
                         Map<String, Object> receiver = (Map<String, Object>) value.get("receiver");
@@ -149,6 +150,12 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
 
                         // Create a new OrderDTO object with the data
                         OrderDTO order = new OrderDTO();
+                        order.setDateTime(strDateTime);
+                        order.setState(statusOrder);
+                        order.setTypeOfProduct(productTypeUnicode);
+                        order.setAddress(receiverAddress);
+                        order.setPhoneNumber(receiverPhone);
+                        order.setKey(key);
 
                         // Add the new order to the allOrders list
                         allOrders.add(order);
