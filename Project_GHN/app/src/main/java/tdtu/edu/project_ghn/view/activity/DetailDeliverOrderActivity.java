@@ -11,10 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import tdtu.edu.project_ghn.R;
+import tdtu.edu.project_ghn.controller.DeliverOrderController;
+import tdtu.edu.project_ghn.controller.service.OnAddDeliverOrderListener;
 import tdtu.edu.project_ghn.model.OrderDTO;
 
 public class DetailDeliverOrderActivity extends AppCompatActivity {
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     TextView txtDateCreated2,
             txtShopAddress, txtShopPhone, txtReceiverName, txtReceiverAddress,
             txtAddressDetail, txtReceiverPhone, txtTransport, txtService,
@@ -24,6 +30,7 @@ public class DetailDeliverOrderActivity extends AppCompatActivity {
 
     Button btnUpdateOrderState;
     OrderDTO orderDTO;
+    DeliverOrderController deliverOrderController = new DeliverOrderController();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +86,23 @@ public class DetailDeliverOrderActivity extends AppCompatActivity {
         }
     }
     private void initListener() {
+        btnUpdateOrderState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deliverOrderController.updateStateDeliverOrder(user.getEmail(), orderDTO.getId(), -1, new OnAddDeliverOrderListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("huy don hang", "thanh cong");
+                        
+                    }
+
+                    @Override
+                    public void onFailure(String err) {
+                        Log.d("huy don hang", "that bai");
+                    }
+                });
+            }
+        });
     }
 
     private void initUI() {

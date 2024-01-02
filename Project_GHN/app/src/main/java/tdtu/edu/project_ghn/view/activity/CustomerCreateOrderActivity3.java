@@ -78,6 +78,7 @@ public class CustomerCreateOrderActivity3 extends AppCompatActivity {
 
             @Override
             public void onFailure(String err) {
+                orderMap = new HashMap<>();
                 Log.d("lay danh sach du lieu", "that bai");
             }
         });

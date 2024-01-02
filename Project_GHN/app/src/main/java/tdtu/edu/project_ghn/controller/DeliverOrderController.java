@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -114,7 +115,40 @@ public class DeliverOrderController {
                 });
     }
 
-    public void updateStateDeliverOrder(String email, String idOrder, long stateUpdate) {
+    public void updateStateDeliverOrder(String email, String idOrder, long stateUpdate, OnAddDeliverOrderListener listener) {
         DocumentReference deliverOrder = db.collection("deliver_orders").document(email);
+
+        getListDeliverOrdersByEmailUser(new OnGetDeliverOrderByEmailUserListener() {
+            @Override
+            public void onSuccess(Map<String, Object> values) {
+                deliverOrderMap = values;
+            }
+
+            @Override
+            public void onFailure(String err) {
+
+            }
+        });
+
+        if (deliverOrderMap != null) {
+            Map<String, Object> orderSelected = (Map<String, Object>) deliverOrderMap.get(idOrder);
+            orderSelected.put("status", stateUpdate);
+            deliverOrderMap.replace(idOrder, orderSelected);
+
+            db.collection("deliver_orders").document(user.getEmail())
+                    .set(deliverOrderMap, SetOptions.merge())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            listener.onSuccess();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            listener.onFailure(e.getMessage());
+                        }
+                    });
+
+        }
     }
 }
