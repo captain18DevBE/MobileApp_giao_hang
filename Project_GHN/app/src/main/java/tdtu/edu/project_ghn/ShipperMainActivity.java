@@ -73,6 +73,7 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
     private ListOrderAdapter orderAdapter;
     private List<OrderDTO> allOrders = new ArrayList<>();
     private FusedLocationProviderClient fusedLocationClient;
+    private String customerEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +149,8 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
                         String receiverAddress = (String) receiver.get("address");
                         String receiverPhone = (String) receiver.get("phoneNumber");
 
+                        Map<String, Object> customerMap = (Map<String, Object>) value.get("customer");
+                        customerEmail = (String) customerMap.get("email");
                         // Create a new OrderDTO object with the data
                         OrderDTO order = new OrderDTO();
                         order.setDateTime(strDateTime);
@@ -173,6 +176,7 @@ public class ShipperMainActivity extends AppCompatActivity implements Navigation
                         progressBar.setVisibility(View.VISIBLE);
                         Intent intent = new Intent(ShipperMainActivity.this, ShipperOrderDetailActivity.class);
                         intent.putExtra("key", orderDTO.getKey());
+                        intent.putExtra("email", customerEmail);
                         startActivity(intent);
                     }
                 });

@@ -35,7 +35,7 @@
                 android:layout_height="55dp"
                 android:gravity="center"
                 android:textSize="15dp"
-                android:text="Đại học Tôn Đức Thắng" />
+                android:text="" />
 
             <TextView
                 android:layout_width="match_parent"
